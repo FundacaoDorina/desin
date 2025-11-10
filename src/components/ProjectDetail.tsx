@@ -62,10 +62,11 @@ const ProjectDetail = ({ name, status, nextStep, timeline }: ProjectDetailProps)
       </div>
 
       <div className="relative pt-8 md:pt-10 lg:pt-12">
-        <div className="flex items-center space-x-8 md:space-x-12 lg:space-x-16 xl:space-x-20 mb-8">
-          {sortedTimeline.map((yearData, index) => (
-            <div key={yearData.year} className="relative">
-              <div className="flex flex-col items-center">
+        {/* Timeline header with years and connecting line */}
+        <div className="relative mb-12 md:mb-16">
+          <div className={`grid gap-4`} style={{ gridTemplateColumns: `repeat(${sortedTimeline.length}, 1fr)` }}>
+            {sortedTimeline.map((yearData, index) => (
+              <div key={yearData.year} className="relative flex flex-col items-center">
                 <span className="text-card-foreground font-bebas font-bold text-2xl md:text-3xl lg:text-4xl xl:text-5xl mb-4">
                   {yearData.year}
                 </span>
@@ -74,19 +75,21 @@ const ProjectDetail = ({ name, status, nextStep, timeline }: ProjectDetailProps)
                   className="w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 bg-card-foreground cursor-pointer hover:scale-110 transition-transform"
                   aria-label={`Toggle ${yearData.year}`}
                 />
+                {index < sortedTimeline.length - 1 && (
+                  <div className="absolute top-[4.5rem] md:top-[5.5rem] lg:top-[6.5rem] left-[50%] w-[100vw] h-1 bg-card-foreground" 
+                       style={{ width: 'calc(100% + 1rem)' }} />
+                )}
               </div>
-              {index < sortedTimeline.length - 1 && (
-                <div className="absolute top-[4.5rem] md:top-[5.5rem] lg:top-[6.5rem] left-full w-8 md:w-12 lg:w-16 xl:w-20 h-1 bg-card-foreground" />
-              )}
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
-        <div className="space-y-6 md:space-y-8 lg:space-y-10">
+        {/* Timeline items aligned under their respective years */}
+        <div className={`grid gap-4`} style={{ gridTemplateColumns: `repeat(${sortedTimeline.length}, 1fr)` }}>
           {sortedTimeline.map((yearData) => (
-            <div key={yearData.year}>
+            <div key={yearData.year} className="flex flex-col items-center">
               {expandedYears.includes(yearData.year) && (
-                <div className="space-y-3 md:space-y-4">
+                <div className="space-y-3 md:space-y-4 w-full flex flex-col items-center">
                   {yearData.items.map((item, idx) => (
                     <div
                       key={idx}
