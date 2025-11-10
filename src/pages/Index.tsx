@@ -27,7 +27,7 @@ const Index = () => {
           />
         ) : (
           <div className="relative">
-            <aside className="absolute top-0 left-0 w-fit max-w-xs">
+            <aside className="absolute top-0 left-0">
               <ProjectList
                 projects={projects}
                 selectedProject={selectedProjectId}
@@ -35,7 +35,7 @@ const Index = () => {
                 minimized
               />
             </aside>
-            <div className="ml-0 lg:ml-64">
+            <div className="ml-32">
               <ProjectDetail
                 name={selectedProject.name}
                 status={selectedProject.status}
