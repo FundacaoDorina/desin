@@ -1,0 +1,217 @@
+[
+  {
+    "id": "avalia",
+    "name": "Avalia",
+    "status": "Em desenvolvimento do MVP",
+    "nextStep": "Teste com o departamento Digital",
+    "timeline": [
+      {
+        "year": "2025",
+        "items": [
+          {
+            "text": "Função de Login",
+            "color": "success"
+          },
+          {
+            "text": "Tela de Perfil",
+            "color": "success"
+          }
+        ]
+      },
+      {
+        "year": "2026",
+        "items": [
+          {
+            "text": "Módulo de Avaliação",
+            "color": "warning"
+          },
+          {
+            "text": "Relatórios",
+            "color": "muted"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "clockfacil",
+    "name": "Clockfácil",
+    "status": "Em fase de testes",
+    "nextStep": "Implementação piloto",
+    "timeline": [
+      {
+        "year": "2025",
+        "items": [
+          {
+            "text": "Interface de usuário",
+            "color": "success"
+          },
+          {
+            "text": "Sistema de registro",
+            "color": "success"
+          }
+        ]
+      },
+      {
+        "year": "2026",
+        "items": [
+          {
+            "text": "Integração com RH",
+            "color": "warning"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "conor",
+    "name": "Conor",
+    "status": "Planejamento",
+    "nextStep": "Definição de escopo",
+    "timeline": [
+      {
+        "year": "2025",
+        "items": [
+          {
+            "text": "Pesquisa de requisitos",
+            "color": "warning"
+          }
+        ]
+      },
+      {
+        "year": "2026",
+        "items": [
+          {
+            "text": "Desenvolvimento inicial",
+            "color": "muted"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dorina-ia",
+    "name": "Dorina IA",
+    "status": "Prototipagem",
+    "nextStep": "Validação de IA",
+    "timeline": [
+      {
+        "year": "2025",
+        "items": [
+          {
+            "text": "Modelo de IA base",
+            "color": "success"
+          },
+          {
+            "text": "Interface de teste",
+            "color": "warning"
+          }
+        ]
+      },
+      {
+        "year": "2026",
+        "items": [
+          {
+            "text": "Treinamento do modelo",
+            "color": "muted"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "linear",
+    "name": "Linear",
+    "status": "Em desenvolvimento",
+    "nextStep": "Testes de usabilidade",
+    "timeline": [
+      {
+        "year": "2025",
+        "items": [
+          {
+            "text": "Arquitetura base",
+            "color": "success"
+          },
+          {
+            "text": "Módulos principais",
+            "color": "warning"
+          }
+        ]
+      },
+      {
+        "year": "2026",
+        "items": [
+          {
+            "text": "Refinamentos",
+            "color": "muted"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "plataforma-braille",
+    "name": "Plataforma Braille",
+    "status": "Fase beta",
+    "nextStep": "Lançamento público",
+    "timeline": [
+      {
+        "year": "2024",
+        "items": [
+          {
+            "text": "Desenvolvimento core",
+            "color": "success"
+          }
+        ]
+      },
+      {
+        "year": "2025",
+        "items": [
+          {
+            "text": "Testes com usuários",
+            "color": "success"
+          },
+          {
+            "text": "Ajustes finais",
+            "color": "warning"
+          }
+        ]
+      },
+      {
+        "year": "2026",
+        "items": [
+          {
+            "text": "Expansão de recursos",
+            "color": "muted"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "puncao",
+    "name": "Punção",
+    "status": "Conceito",
+    "nextStep": "Análise de viabilidade",
+    "timeline": [
+      {
+        "year": "2025",
+        "items": [
+          {
+            "text": "Estudo de mercado",
+            "color": "warning"
+          }
+        ]
+      },
+      {
+        "year": "2026",
+        "items": [
+          {
+            "text": "Prototipagem",
+            "color": "muted"
+          }
+        ]
+      }
+    ]
+  }
+]

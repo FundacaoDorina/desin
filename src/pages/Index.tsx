@@ -1,12 +1,51 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import Header from "@/components/Header";
+import ProjectList from "@/components/ProjectList";
+import ProjectDetail from "@/components/ProjectDetail";
+import projectsData from "@/data/projects.json";
+import type { Project } from "@/types/project";
 
 const Index = () => {
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
+
+  const projects = projectsData as Project[];
+  const selectedProject = projects.find((p) => p.id === selectedProjectId);
+
+  const handleSelectProject = (id: string) => {
+    setSelectedProjectId(id);
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background">
+      <Header />
+      <main className="bg-card mx-4 my-6 md:mx-8 md:my-8 lg:mx-12 lg:my-10 p-6 md:p-10 lg:p-14 xl:p-20 min-h-[80vh]">
+        {!selectedProject ? (
+          <ProjectList
+            projects={projects}
+            selectedProject={selectedProjectId}
+            onSelectProject={handleSelectProject}
+          />
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-8 lg:gap-12">
+            <aside className="lg:sticky lg:top-6 lg:self-start">
+              <ProjectList
+                projects={projects}
+                selectedProject={selectedProjectId}
+                onSelectProject={handleSelectProject}
+                minimized
+              />
+            </aside>
+            <div>
+              <ProjectDetail
+                name={selectedProject.name}
+                status={selectedProject.status}
+                nextStep={selectedProject.nextStep}
+                timeline={selectedProject.timeline}
+              />
+            </div>
+          </div>
+        )}
+      </main>
     </div>
   );
 };
