@@ -13,9 +13,9 @@ const ProjectList = ({
 }: ProjectListProps) => {
   if (minimized) {
     return (
-      <div className="bg-sidebar-light p-1 rounded w-fit">
-        <div className="bg-sidebar-dark px-2 py-0.5 mb-1 rounded">
-          <h2 className="text-card-foreground font-bebas font-bold text-xs">
+      <div className="bg-sidebar-light p-0.5 rounded w-fit">
+        <div className="bg-sidebar-dark px-1 py-0.5 mb-0.5 rounded">
+          <h2 className="text-card-foreground font-bebas font-bold text-xs leading-none">
             Projetos
           </h2>
         </div>
@@ -24,7 +24,7 @@ const ProjectList = ({
             <button
               key={project.id}
               onClick={() => onSelectProject(project.id)}
-              className={`w-full text-left px-1.5 py-0.5 font-bebas font-bold text-xs transition-colors rounded whitespace-nowrap ${
+              className={`w-full text-left px-1 py-0.5 font-bebas font-bold text-xs leading-none transition-colors rounded whitespace-nowrap ${
                 selectedProject === project.id
                   ? "bg-primary text-primary-foreground"
                   : "hover:bg-primary hover:text-primary-foreground"

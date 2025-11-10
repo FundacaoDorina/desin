@@ -35,7 +35,7 @@ const Index = () => {
                 minimized
               />
             </aside>
-            <div className="ml-32">
+            <div className="ml-24">
               <ProjectDetail
                 name={selectedProject.name}
                 status={selectedProject.status}
