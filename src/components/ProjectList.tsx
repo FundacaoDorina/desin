@@ -50,7 +50,10 @@ const ProjectList = ({
           <button
             key={project.id}
             onClick={() => onSelectProject(project.id)}
-            className="block w-full text-left font-bebas font-bold text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-card-foreground hover:bg-primary hover:text-primary-foreground px-4 py-2 transition-colors rounded"
+            className="block w-full text-left font-bebas font-bold text-card-foreground hover:bg-primary hover:text-primary-foreground px-4 py-2 transition-colors rounded"
+            style={{
+              fontSize: 'calc(4rem - 2px)',
+            }}
           >
             {project.name}
           </button>
