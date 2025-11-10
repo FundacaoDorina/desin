@@ -26,8 +26,8 @@ const Index = () => {
             onSelectProject={handleSelectProject}
           />
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-8 lg:gap-12">
-            <aside className="lg:sticky lg:top-6 lg:self-start">
+          <div className="relative">
+            <aside className="absolute top-0 left-0 w-fit max-w-xs">
               <ProjectList
                 projects={projects}
                 selectedProject={selectedProjectId}
@@ -35,7 +35,7 @@ const Index = () => {
                 minimized
               />
             </aside>
-            <div>
+            <div className="ml-0 lg:ml-64">
               <ProjectDetail
                 name={selectedProject.name}
                 status={selectedProject.status}

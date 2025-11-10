@@ -13,18 +13,18 @@ const ProjectList = ({
 }: ProjectListProps) => {
   if (minimized) {
     return (
-      <div className="bg-sidebar-light p-4 rounded">
-        <div className="bg-sidebar-dark px-4 py-2 mb-4 rounded">
-          <h2 className="text-card-foreground font-bebas font-bold text-lg md:text-xl lg:text-2xl">
+      <div className="bg-sidebar-light p-2 rounded w-fit">
+        <div className="bg-sidebar-dark px-2 py-1 mb-2 rounded">
+          <h2 className="text-card-foreground font-bebas font-bold text-sm">
             Projetos
           </h2>
         </div>
-        <nav className="space-y-2">
+        <nav className="space-y-1">
           {projects.map((project) => (
             <button
               key={project.id}
               onClick={() => onSelectProject(project.id)}
-              className={`w-full text-left px-3 py-2 font-bebas font-bold text-sm md:text-base lg:text-lg transition-colors rounded ${
+              className={`w-full text-left px-2 py-1 font-bebas font-bold text-xs transition-colors rounded whitespace-nowrap ${
                 selectedProject === project.id
                   ? "bg-primary text-primary-foreground"
                   : "hover:bg-primary hover:text-primary-foreground"
