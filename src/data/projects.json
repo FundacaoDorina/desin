@@ -8,27 +8,26 @@
       {
         "year": "2025",
         "items": [
-          {
-            "text": "Função de Login",
-            "color": "success"
-          },
-          {
-            "text": "Tela de Perfil",
-            "color": "success"
-          }
+          { "text": "Início do desenvolvimento", "color": "success" },
+          { "text": "Tela de projeto", "color": "success" },
+          { "text": "Tela de descrição", "color": "success" },
+          { "text": "Tela de perfil", "color": "success" },
+          { "text": "Tela de usuários", "color": "success" },
+          { "text": "Conexão com o Supabase storage", "color": "success" },
+          { "text": "Autenticação funcional", "color": "success" },
+          { "text": "Upload e processamento de .docx", "color": "success" },
+          { "text": "Conexão com API da Dorina IA", "color": "success" },
+          { "text": "Mudança automática de status", "color": "success" },
+          { "text": "Inserção de páginas", "color": "success" },
+          { "text": "Exportar .docx com as imagens", "color": "warning" }
         ]
       },
       {
         "year": "2026",
         "items": [
-          {
-            "text": "Módulo de Avaliação",
-            "color": "warning"
-          },
-          {
-            "text": "Relatórios",
-            "color": "muted"
-          }
+          { "text": "Dashboard", "color": "muted" },
+          { "text": "Ajustes na função comentários", "color": "muted" },
+          { "text": "Ajuste na relação com arquivos emf", "color": "warning" }
         ]
       }
     ]
@@ -36,29 +35,27 @@
   {
     "id": "clockfacil",
     "name": "Clockfácil",
-    "status": "Em fase de testes",
-    "nextStep": "Implementação piloto",
+    "status": "Pausado",
+    "nextStep": "Teste com o departamento Gráfica",
     "timeline": [
       {
-        "year": "2025",
+        "year": "2024",
         "items": [
-          {
-            "text": "Interface de usuário",
-            "color": "success"
-          },
-          {
-            "text": "Sistema de registro",
-            "color": "success"
-          }
+          { "text": "Levantamento de specs", "color": "success" },
+          { "text": "Criação do banco de dados", "color": "success" },
+          { "text": "Construção da lógica principal do backend", "color": "success" },
+          { "text": "Implementação do fluxo de registro", "color": "success" },
+          { "text": "Criada página de registro de horário", "color": "success" }
         ]
       },
       {
-        "year": "2026",
+        "year": "2025",
         "items": [
-          {
-            "text": "Integração com RH",
-            "color": "warning"
-          }
+          { "text": "Validada a lógica de funcionamento", "color": "success" },
+          { "text": "MVP pronto para teste", "color": "success" },
+          { "text": "Teste em tablets", "color": "success" },
+          { "text": "Disponibilizar no servidor interno", "color": "muted" },
+          { "text": "Conectar ao Clockfy", "color": "muted" }
         ]
       }
     ]
@@ -66,25 +63,32 @@
   {
     "id": "conor",
     "name": "Conor",
-    "status": "Planejamento",
-    "nextStep": "Definição de escopo",
+    "status": "Em desenvolvimento do MVP",
+    "nextStep": "Concluir testes iniciais de funcionamento",
     "timeline": [
       {
         "year": "2025",
         "items": [
-          {
-            "text": "Pesquisa de requisitos",
-            "color": "warning"
-          }
+          { "text": "Início do desenvolvimento", "color": "success" },
+          { "text": "Upload de excel", "color": "success" },
+          { "text": "Conexão com o Supabase", "color": "success" },
+          { "text": "Ajuste de layout e UI/UX", "color": "success" },
+          { "text": "Implementada lógica de login", "color": "success" },
+          { "text": "Ajustada aba Orçamentos", "color": "success" },
+          { "text": "Ajustada aba Despesas", "color": "success" },
+          { "text": "Criada tela de perfil", "color": "success" },
+          { "text": "Correção na tela de Admin", "color": "success" },
+          { "text": "Correção nos papéis dos usuários", "color": "success" },
+          { "text": "Atualização database no Supabase", "color": "success" },
+          { "text": "Corrigido upload de arquivos", "color": "success" }
         ]
       },
       {
         "year": "2026",
         "items": [
-          {
-            "text": "Desenvolvimento inicial",
-            "color": "muted"
-          }
+          { "text": "Testes internos de funcionalidade", "color": "muted" },
+          { "text": "Deploy do MVP", "color": "muted" },
+          { "text": "Teste com grupo reduzido de usuários", "color": "muted" }
         ]
       }
     ]
@@ -92,29 +96,47 @@
   {
     "id": "dorina-ia",
     "name": "Dorina IA",
-    "status": "Prototipagem",
-    "nextStep": "Validação de IA",
+    "status": "Treinamento focado no Digital; Ajustes de acessibilidade na Plataforma",
+    "nextStep": "Fine-tuning genérico para o Braille",
     "timeline": [
+      {
+        "year": "2024",
+        "items": [
+          { "text": "Divisão de categorias de imagem", "color": "success" },
+          { "text": "Levantamento de specs dos departamentos Braille e Digital", "color": "success" },
+          { "text": "Engenharia de prompt Braille", "color": "success" },
+          { "text": "Engenharia de prompt Digital", "color": "success" },
+          { "text": "Levantamento de dataset braille", "color": "success" },
+          { "text": "Implementado primeiro fine-tuning Braille", "color": "success" },
+          { "text": "Levantamento de dataset Digital", "color": "success" },
+          { "text": "Implementado fine-tuning Digital para Ilustração", "color": "success" },
+          { "text": "Implementado fine-tuning Digital para Mapas", "color": "success" },
+          { "text": "Grupo de Estudos de Mapas", "color": "success" }
+        ]
+      },
       {
         "year": "2025",
         "items": [
-          {
-            "text": "Modelo de IA base",
-            "color": "success"
-          },
-          {
-            "text": "Interface de teste",
-            "color": "warning"
-          }
+          { "text": "Alteração completa do design da plataforma", "color": "success" },
+          { "text": "Teste de acessibilidade e usabilidade", "color": "success" },
+          { "text": "Criação da Central de Ajuda - JSM", "color": "success" },
+          { "text": "Início da redação do Manual de descrição de mapas", "color": "success" },
+          { "text": "Implementado fine-tuning Braille para Mapas - EF II", "color": "success" },
+          { "text": "Implementado fine-tuning Braille genérico", "color": "success" },
+          { "text": "Implementado fine-tuning Braille Mapas - EF I", "color": "warning" },
+          { "text": "Implementado fine-tuning para o marketing", "color": "success" },
+          { "text": "Engenharia de prompt digital", "color": "warning" },
+          { "text": "Correção de acessibilidade da plataforma", "color": "warning" }
         ]
       },
       {
         "year": "2026",
         "items": [
-          {
-            "text": "Treinamento do modelo",
-            "color": "muted"
-          }
+          { "text": "Pesquisa sobre uso de IA", "color": "muted" },
+          { "text": "Pesquisa sobre aplicabilidade de simbologia e cores em mapas", "color": "muted" },
+          { "text": "Levantar dataset para infográficos", "color": "muted" },
+          { "text": "Levantar dataset para HQS", "color": "muted" },
+          { "text": "Conclusão do Manual de descrição de mapas", "color": "muted" }
         ]
       }
     ]
@@ -122,29 +144,40 @@
   {
     "id": "linear",
     "name": "Linear",
-    "status": "Em desenvolvimento",
-    "nextStep": "Testes de usabilidade",
+    "status": "Pausado o desenvolvimento",
+    "nextStep": "Desenvolver pré-processamento para extrair negrito e itálico",
     "timeline": [
       {
         "year": "2025",
         "items": [
-          {
-            "text": "Arquitetura base",
-            "color": "success"
-          },
-          {
-            "text": "Módulos principais",
-            "color": "warning"
-          }
+          { "text": "Criar a base funcional que transforma PDFs em imagens", "color": "success" },
+          { "text": "Gerar descrições via LLM", "color": "success" },
+          { "text": "Gerar página em JSON", "color": "success" },
+          { "text": "Criar plataforma de teste da ferramenta", "color": "success" },
+          { "text": "Criar a base funcional que transforma PDFs em imagens", "color": "success" },
+          { "text": "QA Teste - Testar prompt para extrair a estrutura correta", "color": "success" },
+          { "text": "Desenvolver pré-processamento para extrair negrito e itálico", "color": "warning" },
+          { "text": "Mergear marcações com o JSON gerado pela LLM", "color": "muted" }
         ]
       },
       {
         "year": "2026",
         "items": [
-          {
-            "text": "Refinamentos",
-            "color": "muted"
-          }
+          { "text": "Criar banco de dados para salvar as imagens", "color": "muted" },
+          { "text": "Desenvolver plataforma de produção", "color": "muted" },
+          { "text": "Aplicar fila de processamento", "color": "muted" },
+          { "text": "Desenvolver integração com a Dorina IA", "color": "muted" },
+          { "text": "Início dos testes de integração com Google Vision API", "color": "muted" },
+          { "text": "Mapeamento do “Conheça seu livro” como referência de estilo", "color": "muted" },
+          { "text": "Capturar posição/estrutura visual para HTML/EPUB", "color": "muted" },
+          { "text": "Adaptar a PB para receber JSON", "color": "muted" },
+          { "text": "Adaptar a PB para exportar JSON", "color": "muted" },
+          { "text": "Integração com a PB", "color": "muted" },
+          { "text": "Teste ponta a ponta", "color": "muted" },
+          { "text": "Correção pós-teste", "color": "muted" },
+          { "text": "Piloto em produção", "color": "muted" },
+          { "text": "Correção pós-piloto", "color": "muted" },
+          { "text": "Início da captura de dataset para fine-tuning", "color": "muted" }
         ]
       }
     ]
@@ -152,38 +185,125 @@
   {
     "id": "plataforma-braille",
     "name": "Plataforma Braille",
-    "status": "Fase beta",
-    "nextStep": "Lançamento público",
+    "status": "Aguardando fundos",
+    "nextStep": "Correção de erros reportados na Central de ajuda",
     "timeline": [
+      {
+        "year": "2023",
+        "items": [
+          { "text": "Levantamento de specs", "color": "success" },
+          { "text": "Extração de texto do pdf", "color": "success" },
+          { "text": "Aprimorar detecção de itálico", "color": "success" },
+          { "text": "Implementar adaptação automática para negritos, itálicos e afins", "color": "success" },
+          { "text": "Regra para conversão de barrar", "color": "success" },
+          { "text": "Ajustes de responsividade", "color": "success" },
+          { "text": "Otimizar layout", "color": "success" },
+          { "text": "Adicionar campo de busca de usuários", "color": "success" },
+          { "text": "Controle de usuários no acesso de documentos", "color": "success" },
+          { "text": "Remover linhas vazias ao importar o pdf", "color": "success" },
+          { "text": "Campo para legenda na caixa de descrição de imagens", "color": "success" },
+          { "text": "Função sublinhado", "color": "success" },
+          { "text": "Inserir quadro vazio", "color": "success" },
+          { "text": "Exibir símbolos de formatação", "color": "success" },
+          { "text": "Adicionar estilos de títulos", "color": "success" },
+          { "text": "Menu inserir", "color": "success" },
+          { "text": "Menu layout", "color": "success" },
+          { "text": "Menu referências", "color": "success" },
+          { "text": "Menu Revisão", "color": "success" },
+          { "text": "Menu exibir", "color": "success" },
+          { "text": "Controle de zoom", "color": "success" },
+          { "text": "Exibir número de páginas e linhas", "color": "success" },
+          { "text": "Ver em braille", "color": "success" },
+          { "text": "Formatação de maiúsculas e minúsculas", "color": "success" },
+          { "text": "Gerenciar status do documento", "color": "success" },
+          { "text": "Exportar pdf", "color": "success" },
+          { "text": "Resumo semanal por e-mail", "color": "success" },
+          { "text": "Modal informativo ao acessar documento", "color": "success" },
+          { "text": "Contexto matemático", "color": "success" },
+          { "text": "Contexto informático", "color": "success" },
+          { "text": "Setas para cima e para baixo", "color": "success" },
+          { "text": "Arrastar elementos de imagem", "color": "success" },
+          { "text": "Otimização para pcs lentos", "color": "success" }
+        ]
+      },
       {
         "year": "2024",
         "items": [
-          {
-            "text": "Desenvolvimento core",
-            "color": "success"
-          }
+          { "text": "Inserção de caracteres especiais", "color": "success" },
+          { "text": "Visualizar documentos em listas", "color": "success" },
+          { "text": "Bloquear edição simultânea", "color": "success" },
+          { "text": "Converter ponto em sinal de multiplicação", "color": "success" },
+          { "text": "Inserir numeração automaticamente ao importar pdf", "color": "success" },
+          { "text": "Ajustes de usabilidade ao colar", "color": "success" },
+          { "text": "Localizar e substituir somente na seleção", "color": "success" },
+          { "text": "<F-> e <F+> encadeado em um bloco de texto", "color": "success" },
+          { "text": "Ajustar exportação de nota de rodapé", "color": "success" },
+          { "text": "Substituir apóstrofes na exportação", "color": "success" },
+          { "text": "Implementar solicitação de descrição de todas as imagens", "color": "success" },
+          { "text": "Salvar posição do cursor ao sair da página", "color": "success" },
+          { "text": "Adicionar regra de parênteses simples", "color": "success" },
+          { "text": "Quebrar linhas no contexto informático ao exportar txt", "color": "success" },
+          { "text": "Remover negrito dos números na importação", "color": "success" },
+          { "text": "Criar visualização otimizada para edição", "color": "success" },
+          { "text": "Ajustes na gestão de usuário", "color": "success" },
+          { "text": "Criar menu de contexto na listagem para executar ações", "color": "success" },
+          { "text": "Exibir que o documento está sendo editado para outra pessoa na listagem", "color": "success" },
+          { "text": "Implementar módulo focado na descrição de imagens e exportação de DOCX", "color": "success" },
+          { "text": "Substituir as fontes do sistema por fontes OpenSource", "color": "success" },
+          { "text": "Adicionar botão de desativar no cadastro de usuário", "color": "success" },
+          { "text": "Implementar funcionalidade de apagar formatação, copiar formatação e sublinhar texto", "color": "success" },
+          { "text": "Implementar marcadores de textos (lista de bullets, setas ou quadrados)", "color": "success" },
+          { "text": "Inserir funcionalidade para Quadros e Tabelas", "color": "success" },
+          { "text": "Opção de Notas e Letras Estrangeiras", "color": "success" },
+          { "text": "Inserir opções de modelos de títulos", "color": "success" },
+          { "text": "Implementar regra do bloco de recuo na conversão", "color": "success" },
+          { "text": "Permitir texto nos lados da seta", "color": "success" },
+          { "text": "Implementar funcionalidade 'Quebra de Parte'", "color": "success" },
+          { "text": "Implementar todo o alfabeto grego nos símbolos", "color": "success" },
+          { "text": "Implementar visualização de histórico de alteração dos documentos em Braille", "color": "success" },
+          { "text": "Implementar nova funcionalidade - Figuras", "color": "success" },
+          { "text": "Implementar funcionalidade de: Identificação", "color": "success" },
+          { "text": "Implementar funcionalidade de: Paginação", "color": "success" },
+          { "text": "Inserir nova funcionalidade de Sumário", "color": "success" },
+          { "text": "Implementar funcionalidade Capa e Folha de Rosto", "color": "success" },
+          { "text": "Implementar funcionalidade de Ficha Técnica", "color": "success" },
+          { "text": "Ajustes no cadastro de figuras", "color": "success" }
         ]
       },
       {
         "year": "2025",
         "items": [
-          {
-            "text": "Testes com usuários",
-            "color": "success"
-          },
-          {
-            "text": "Ajustes finais",
-            "color": "warning"
-          }
+          { "text": "Implementar avaliação de imagens destacadas pela API", "color": "success" },
+          { "text": "Editar formatação do docx exportado", "color": "success" },
+          { "text": "Adicionar novo parâmetro nas chamdas de descrição de imagem", "color": "success" },
+          { "text": "Permitir que a grade braille seja editável em documentos do tipo 'arco'", "color": "success" },
+          { "text": "Criar ambiente 'beta' para o editor no ambiente de produção", "color": "success" },
+          { "text": "Pausar notificações por email", "color": "success" },
+          { "text": "Edição da função 'Dicionário'", "color": "success" },
+          { "text": "Corrigir quebra de linha em links", "color": "success" },
+          { "text": "Espaço em palavras com 'fi'", "color": "success" }
         ]
       },
       {
         "year": "2026",
         "items": [
-          {
-            "text": "Expansão de recursos",
-            "color": "muted"
-          }
+          { "text": "Erro de espaço no contexto ao aplicar recuo", "color": "muted" },
+          { "text": "Erro em caractere", "color": "muted" },
+          { "text": "Separar a plataforma em ecossistema de produção com divisão por área (braille, digital e áudio)", "color": "muted" },
+          { "text": "Implementar funcionalidade de Identificação", "color": "muted" },
+          { "text": "Copiar comportamento do word na movimentação de parágrafos entre páginas", "color": "muted" },
+          { "text": "Implementar funcionalidade 'Quebra de Parte'", "color": "muted" },
+          { "text": "Melhorias no sumário", "color": "muted" },
+          { "text": "Corrigir Representação de ângulo", "color": "muted" },
+          { "text": "Grafia química", "color": "muted" },
+          { "text": "Localizar e substituir somente na seleção (copiar comportamento do word ao mostrar lista)", "color": "muted" },
+          { "text": "Reestruturar recuo", "color": "muted" },
+          { "text": "Criar modo desenho para visualização e edição de figuras no editor (retomar)", "color": "muted" },
+          { "text": "Adicionar atalhos", "color": "muted" },
+          { "text": "Sincronizar destaque entre visualização em braille e versão em tinta", "color": "muted" },
+          { "text": "Modelos de página", "color": "muted" },
+          { "text": "Sinal de grau no corretor", "color": "muted" },
+          { "text": "Contexto em tabelas", "color": "muted" }
         ]
       }
     ]
@@ -191,25 +311,35 @@
   {
     "id": "puncao",
     "name": "Punção",
-    "status": "Conceito",
-    "nextStep": "Análise de viabilidade",
+    "status": "Em teste com o departamento de Atendimento",
+    "nextStep": "Levantamento de feedback e correções com base na experiência do Atendimento",
     "timeline": [
       {
         "year": "2025",
         "items": [
-          {
-            "text": "Estudo de mercado",
-            "color": "warning"
-          }
+          { "text": "Levantamento de specs", "color": "success" },
+          { "text": "Desenho inicial de funcionalidade", "color": "success" },
+          { "text": "Mapeamento completo de alfabeto", "color": "success" },
+          { "text": "Implementado MVP", "color": "success" },
+          { "text": "Correção de atalhos", "color": "success" },
+          { "text": "Implementada função arrastar", "color": "success" },
+          { "text": "Ajuste fino na sidebar", "color": "success" },
+          { "text": "Correção no encoding", "color": "success" },
+          { "text": "Implementada caixa de texto", "color": "success" },
+          { "text": "Implementada ferramenta de seleção", "color": "success" }
         ]
       },
       {
         "year": "2026",
         "items": [
-          {
-            "text": "Prototipagem",
-            "color": "muted"
-          }
+          { "text": "Criação de login e autenticação", "color": "muted" },
+          { "text": "Migração para domínio personalizado", "color": "muted" },
+          { "text": "Lançamento oficial da ferramenta", "color": "muted" },
+          { "text": "Implementar forma geométrica triângulo", "color": "muted" },
+          { "text": "Implementar forma geométrica quadrado", "color": "muted" },
+          { "text": "Implementar forma geométrica círculo", "color": "muted" },
+          { "text": "Implementar forma linha", "color": "muted" },
+          { "text": "Implementar modo mesa de luz", "color": "muted" }
         ]
       }
     ]

@@ -1,39 +1,10 @@
-import { useState } from "react";
-import type { TimelineYear, TimelineItemColor } from "@/types/project";
-
 interface ProjectDetailProps {
   name: string;
   status: string;
   nextStep: string;
-  timeline: TimelineYear[];
 }
 
-const ProjectDetail = ({ name, status, nextStep, timeline }: ProjectDetailProps) => {
-  const currentYear = new Date().getFullYear();
-  const sortedTimeline = [...timeline].sort((a, b) => parseInt(a.year) - parseInt(b.year));
-  const lastTwoYears = sortedTimeline.slice(-2).map((t) => t.year);
-
-  const [expandedYears, setExpandedYears] = useState<string[]>(lastTwoYears);
-
-  const toggleYear = (year: string) => {
-    setExpandedYears((prev) =>
-      prev.includes(year) ? prev.filter((y) => y !== year) : [...prev, year]
-    );
-  };
-
-  const getColorClass = (color: TimelineItemColor) => {
-    switch (color) {
-      case "success":
-        return "bg-success text-success-foreground";
-      case "warning":
-        return "bg-warning text-warning-foreground";
-      case "muted":
-        return "bg-sidebar-light text-card-foreground";
-      default:
-        return "bg-sidebar-light text-card-foreground";
-    }
-  };
-
+const ProjectDetail = ({ name, status, nextStep }: ProjectDetailProps) => {
   return (
     <div className="space-y-6 md:space-y-8 lg:space-y-10">
       <div className="bg-primary inline-block px-6 py-3 md:px-8 md:py-4 lg:px-10 lg:py-5">
@@ -44,65 +15,20 @@ const ProjectDetail = ({ name, status, nextStep, timeline }: ProjectDetailProps)
 
       <div className="space-y-4 md:space-y-6">
         <div>
-          <span className="text-card-foreground font-bebas font-bold text-2xl md:text-3xl lg:text-4xl bg-sidebar-light px-3 py-1 rounded">
+          <span className="text-card-foreground font-bebas font-bold text-2xl md:text-3xl lg:text-4xl bg-sidebar-light px-3 py-1 rounded leading-loose">
             Status:
           </span>
-          <span className="text-card-foreground font-bebas font-bold text-2xl md:text-3xl lg:text-4xl ml-3">
+          <span className="text-card-foreground font-bebas font-bold text-2xl md:text-3xl lg:text-4xl ml-3 leading-loose">
             {status}
           </span>
         </div>
         <div>
-          <span className="text-card-foreground font-bebas font-bold text-2xl md:text-3xl lg:text-4xl bg-sidebar-light px-3 py-1 rounded">
+          <span className="text-card-foreground font-bebas font-bold text-2xl md:text-3xl lg:text-4xl bg-sidebar-light px-3 py-1 rounded leading-loose">
             Próximo passo:
           </span>
-          <span className="text-card-foreground font-bebas font-bold text-2xl md:text-3xl lg:text-4xl ml-3">
+          <span className="text-card-foreground font-bebas font-bold text-2xl md:text-3xl lg:text-4xl ml-3 leading-loose">
             {nextStep}
           </span>
-        </div>
-      </div>
-
-      <div className="relative pt-8 md:pt-10 lg:pt-12">
-        {/* Timeline header with years and connecting line */}
-        <div className="relative mb-12 md:mb-16">
-          {/* Connecting line behind the squares */}
-          <div className="absolute left-0 right-0 h-1 bg-card-foreground" style={{ top: 'calc(2rem + 1.75rem)' }} />
-          
-          <div className={`grid gap-4 relative`} style={{ gridTemplateColumns: `repeat(${sortedTimeline.length}, 1fr)` }}>
-            {sortedTimeline.map((yearData) => (
-              <div key={yearData.year} className="flex flex-col items-center">
-                <span className="text-card-foreground font-bebas font-bold text-2xl md:text-3xl lg:text-4xl xl:text-5xl mb-4">
-                  {yearData.year}
-                </span>
-                <button
-                  onClick={() => toggleYear(yearData.year)}
-                  className="w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 bg-card-foreground cursor-pointer hover:scale-110 transition-transform relative z-10"
-                  aria-label={`Toggle ${yearData.year}`}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Timeline items aligned under their respective years */}
-        <div className={`grid gap-4`} style={{ gridTemplateColumns: `repeat(${sortedTimeline.length}, 1fr)` }}>
-          {sortedTimeline.map((yearData) => (
-            <div key={yearData.year} className="flex flex-col items-center">
-              {expandedYears.includes(yearData.year) && (
-                <div className="space-y-3 md:space-y-4 w-full flex flex-col items-center">
-                  {yearData.items.map((item, idx) => (
-                    <div
-                      key={idx}
-                      className={`inline-block px-4 py-2 md:px-5 md:py-3 rounded font-bebas font-bold text-xl md:text-2xl lg:text-3xl ${getColorClass(
-                        item.color
-                      )}`}
-                    >
-                      {item.text}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
         </div>
       </div>
     </div>

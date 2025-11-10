@@ -2,6 +2,7 @@ import { useState } from "react";
 import Header from "@/components/Header";
 import ProjectList from "@/components/ProjectList";
 import ProjectDetail from "@/components/ProjectDetail";
+import Timeline from "@/components/Timeline";
 import projectsData from "@/data/projects.json";
 import type { Project } from "@/types/project";
 
@@ -18,7 +19,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <main className="bg-card mx-4 my-6 md:mx-8 md:my-8 lg:mx-12 lg:my-10 p-6 md:p-10 lg:p-14 xl:p-20 min-h-[80vh]">
+      <main className="bg-card mx-4 my-6 md:mx-8 md:my-8 lg:mx-12 lg:my-10 p-3 md:p-5 lg:p-7 xl:p-10 min-h-[80vh]">
         {!selectedProject ? (
           <ProjectList
             projects={projects}
@@ -26,24 +27,26 @@ const Index = () => {
             onSelectProject={handleSelectProject}
           />
         ) : (
-          <div className="flex gap-4">
-            <aside className="flex-shrink-0">
-              <ProjectList
-                projects={projects}
-                selectedProject={selectedProjectId}
-                onSelectProject={handleSelectProject}
-                minimized
-              />
-            </aside>
-            <div className="flex-1">
-              <ProjectDetail
-                name={selectedProject.name}
-                status={selectedProject.status}
-                nextStep={selectedProject.nextStep}
-                timeline={selectedProject.timeline}
-              />
+          <>
+            <div className="flex">
+              <aside className="flex-shrink-0">
+                <ProjectList
+                  projects={projects}
+                  selectedProject={selectedProjectId}
+                  onSelectProject={handleSelectProject}
+                  minimized
+                />
+              </aside>
+              <div className="flex-1">
+                <ProjectDetail
+                  name={selectedProject.name}
+                  status={selectedProject.status}
+                  nextStep={selectedProject.nextStep}
+                />
+              </div>
             </div>
-          </div>
+            <Timeline timeline={selectedProject.timeline} />
+          </>
         )}
       </main>
     </div>
