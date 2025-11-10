@@ -64,21 +64,20 @@ const ProjectDetail = ({ name, status, nextStep, timeline }: ProjectDetailProps)
       <div className="relative pt-8 md:pt-10 lg:pt-12">
         {/* Timeline header with years and connecting line */}
         <div className="relative mb-12 md:mb-16">
-          <div className={`grid gap-4`} style={{ gridTemplateColumns: `repeat(${sortedTimeline.length}, 1fr)` }}>
-            {sortedTimeline.map((yearData, index) => (
-              <div key={yearData.year} className="relative flex flex-col items-center">
+          {/* Connecting line behind the squares */}
+          <div className="absolute left-0 right-0 h-1 bg-card-foreground" style={{ top: 'calc(2rem + 1.75rem)' }} />
+          
+          <div className={`grid gap-4 relative`} style={{ gridTemplateColumns: `repeat(${sortedTimeline.length}, 1fr)` }}>
+            {sortedTimeline.map((yearData) => (
+              <div key={yearData.year} className="flex flex-col items-center">
                 <span className="text-card-foreground font-bebas font-bold text-2xl md:text-3xl lg:text-4xl xl:text-5xl mb-4">
                   {yearData.year}
                 </span>
                 <button
                   onClick={() => toggleYear(yearData.year)}
-                  className="w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 bg-card-foreground cursor-pointer hover:scale-110 transition-transform"
+                  className="w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 bg-card-foreground cursor-pointer hover:scale-110 transition-transform relative z-10"
                   aria-label={`Toggle ${yearData.year}`}
                 />
-                {index < sortedTimeline.length - 1 && (
-                  <div className="absolute top-[4.5rem] md:top-[5.5rem] lg:top-[6.5rem] left-[50%] w-[100vw] h-1 bg-card-foreground" 
-                       style={{ width: 'calc(100% + 1rem)' }} />
-                )}
               </div>
             ))}
           </div>
