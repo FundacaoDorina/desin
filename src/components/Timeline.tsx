@@ -22,25 +22,8 @@ const Timeline = ({ timeline }: TimelineProps) => {
 
   return (
     <div className="relative pt-8 md:pt-10 lg:pt-12 w-full">
-      {/* Timeline header with years and connecting line */}
-      <div className="relative mb-12 md:mb-16">
-        {/* Connecting line behind the squares */}
-        <div className="absolute left-0 right-0 h-1 bg-card-foreground" style={{ top: 'calc(2rem + 1.75rem)' }} />
-        
-        <div className={`grid gap-4 relative`} style={{ gridTemplateColumns: `repeat(${sortedTimeline.length}, 1fr)` }}>
-          {sortedTimeline.map((yearData) => (
-            <div key={yearData.year} className="flex flex-col items-center">
-              <span className="text-card-foreground font-bebas font-bold text-2xl md:text-3xl lg:text-4xl xl:text-5xl mb-4">
-                {yearData.year}
-              </span>
-              <div className="w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 bg-card-foreground relative z-10" />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Timeline items aligned under their respective years */}
-      <div className={`grid gap-4`} style={{ gridTemplateColumns: `repeat(${sortedTimeline.length}, 1fr)` }}>
+      {/* Mobile view: Year + Tasks grouped together */}
+      <div className="flex flex-col md:hidden gap-8">
         {sortedTimeline.map((yearData) => {
           // Sort items: warning first, then others
           const sortedItems = [...yearData.items].sort((a, b) => {
@@ -50,12 +33,20 @@ const Timeline = ({ timeline }: TimelineProps) => {
           });
 
           return (
-            <div key={yearData.year} className="flex flex-col items-start">
-              <div className="space-y-3 md:space-y-4 w-full flex flex-col items-start">
+            <div key={yearData.year} className="flex flex-col">
+              {/* Year header */}
+              <div className="flex flex-col items-center mb-4">
+                <span className="text-card-foreground font-bebas font-bold text-2xl mb-4">
+                  {yearData.year}
+                </span>
+                <div className="w-6 h-6 bg-card-foreground" />
+              </div>
+              {/* Tasks for this year */}
+              <div className="space-y-3 w-full flex flex-col items-start mt-4">
                 {sortedItems.map((item, idx) => (
                   <div
                     key={idx}
-                    className={`inline-block px-4 py-2 md:px-5 md:py-3 rounded font-bebas font-bold text-xl md:text-2xl lg:text-3xl ${getColorClass(
+                    className={`inline-block px-4 py-2 rounded font-bebas font-bold text-xl ${getColorClass(
                       item.color
                     )}`}
                   >
@@ -66,6 +57,55 @@ const Timeline = ({ timeline }: TimelineProps) => {
             </div>
           );
         })}
+      </div>
+
+      {/* Desktop view: Years on top, Tasks below in grid */}
+      <div className="hidden md:block">
+        {/* Timeline header with years and connecting line */}
+        <div className="relative mb-12 md:mb-16">
+          {/* Connecting line behind the squares */}
+          <div className="absolute left-0 right-0 h-1 bg-card-foreground" style={{ top: 'calc(2rem + 1.75rem)' }} />
+          
+          <div className={`grid gap-4 relative`} style={{ gridTemplateColumns: `repeat(${sortedTimeline.length}, 1fr)` }}>
+            {sortedTimeline.map((yearData) => (
+              <div key={yearData.year} className="flex flex-col items-center">
+                <span className="text-card-foreground font-bebas font-bold text-3xl lg:text-4xl xl:text-5xl mb-4">
+                  {yearData.year}
+                </span>
+                <div className="w-8 lg:w-10 lg:h-10 bg-card-foreground relative z-10" />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Timeline items aligned under their respective years */}
+        <div className={`grid gap-4`} style={{ gridTemplateColumns: `repeat(${sortedTimeline.length}, 1fr)` }}>
+          {sortedTimeline.map((yearData) => {
+            // Sort items: warning first, then others
+            const sortedItems = [...yearData.items].sort((a, b) => {
+              if (a.color === "warning" && b.color !== "warning") return -1;
+              if (a.color !== "warning" && b.color === "warning") return 1;
+              return 0;
+            });
+
+            return (
+              <div key={yearData.year} className="flex flex-col items-start">
+                <div className="space-y-3 md:space-y-4 w-full flex flex-col items-start">
+                  {sortedItems.map((item, idx) => (
+                    <div
+                      key={idx}
+                      className={`inline-block px-5 md:py-3 rounded font-bebas font-bold text-2xl lg:text-3xl ${getColorClass(
+                        item.color
+                      )}`}
+                    >
+                      {item.text}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

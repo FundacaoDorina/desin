@@ -13,7 +13,7 @@ const ProjectList = ({
 }: ProjectListProps) => {
   if (minimized) {
     return (
-      <div className="bg-sidebar-light p-2 rounded w-fit max-w-[50%]">
+      <div className="bg-sidebar-light p-2 rounded w-full md:w-fit md:max-w-[50%]">
         <div className="bg-sidebar-dark px-2 py-1 mb-1 rounded">
           <h2 className="text-card-foreground font-bebas font-bold text-lg leading-none">
             Projetos
