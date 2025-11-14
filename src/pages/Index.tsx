@@ -28,7 +28,7 @@ const Index = () => {
           />
         ) : (
           <>
-            <div className="flex">
+            <div className="flex flex-col md:flex-row gap-4 md:gap-6">
               <aside className="flex-shrink-0">
                 <ProjectList
                   projects={projects}
