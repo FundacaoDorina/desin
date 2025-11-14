@@ -14,19 +14,19 @@ const ProjectDetail = ({ name, status, nextStep }: ProjectDetailProps) => {
       </div>
 
       <div className="space-y-4 md:space-y-6">
-        <div>
+        <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-0">
           <span className="text-card-foreground font-bebas font-bold text-2xl md:text-3xl lg:text-4xl bg-sidebar-light px-3 py-1 rounded leading-loose">
             Status:
           </span>
-          <span className="text-card-foreground font-bebas font-bold text-2xl md:text-3xl lg:text-4xl ml-3 leading-loose">
+          <span className="text-card-foreground font-bebas font-bold text-2xl md:text-3xl lg:text-4xl md:ml-3 leading-loose">
             {status}
           </span>
         </div>
-        <div>
+        <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-0">
           <span className="text-card-foreground font-bebas font-bold text-2xl md:text-3xl lg:text-4xl bg-sidebar-light px-3 py-1 rounded leading-loose">
             Próximo passo:
           </span>
-          <span className="text-card-foreground font-bebas font-bold text-2xl md:text-3xl lg:text-4xl ml-3 leading-loose">
+          <span className="text-card-foreground font-bebas font-bold text-2xl md:text-3xl lg:text-4xl md:ml-3 leading-loose">
             {nextStep}
           </span>
         </div>
