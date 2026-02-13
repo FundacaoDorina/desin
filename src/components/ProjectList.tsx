@@ -37,11 +37,10 @@ const ProjectList = ({
               <span className="block truncate">
                 {project.name}
                 {(() => {
-                  const yearData = project.timeline.find((y) => y.year === thisYear.toString());
-                  if (!yearData || yearData.items.length === 0) return '';
-                  const incompleteCount = yearData.items.filter((item) => item.color !== "success").length;
-                  const totalCount = yearData.items.length;
-                  const percentage = ((incompleteCount / totalCount) * 100).toFixed(0);
+                  const allItems = project.timeline.flatMap((y) => y.items);
+                  if (allItems.length === 0) return '';
+                  const doneCount = allItems.filter((item) => item.color === "success").length;
+                  const percentage = ((doneCount / allItems.length) * 100).toFixed(0);
                   return ` (${percentage}%)`;
                 })()}
               </span>
@@ -71,11 +70,10 @@ const ProjectList = ({
           >
             {project.name}
             {(() => {
-              const yearData = project.timeline.find((y) => y.year === thisYear.toString());
-              if (!yearData || yearData.items.length === 0) return '';
-              const incompleteCount = yearData.items.filter((item) => item.color !== "success").length;
-              const totalCount = yearData.items.length;
-              const percentage = ((incompleteCount / totalCount) * 100).toFixed(0);
+              const allItems = project.timeline.flatMap((y) => y.items);
+              if (allItems.length === 0) return '';
+              const doneCount = allItems.filter((item) => item.color === "success").length;
+              const percentage = ((doneCount / allItems.length) * 100).toFixed(0);
               return ` (${percentage}%)`;
             })()}
           </button>
