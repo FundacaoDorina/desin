@@ -1,0 +1,205 @@
+project_id,project_name,status,next_step,year,item,item_status
+avalia,Avalia,Em desenvolvimento do MVP,Teste com o departamento Digital,2025,Início do desenvolvimento,Concluído
+avalia,Avalia,Em desenvolvimento do MVP,Teste com o departamento Digital,2025,Tela de projeto,Concluído
+avalia,Avalia,Em desenvolvimento do MVP,Teste com o departamento Digital,2025,Tela de descrição,Concluído
+avalia,Avalia,Em desenvolvimento do MVP,Teste com o departamento Digital,2025,Tela de perfil,Concluído
+avalia,Avalia,Em desenvolvimento do MVP,Teste com o departamento Digital,2025,Tela de usuários,Concluído
+avalia,Avalia,Em desenvolvimento do MVP,Teste com o departamento Digital,2025,Conexão com o Supabase storage,Concluído
+avalia,Avalia,Em desenvolvimento do MVP,Teste com o departamento Digital,2025,Autenticação funcional,Concluído
+avalia,Avalia,Em desenvolvimento do MVP,Teste com o departamento Digital,2025,Upload e processamento de .docx,Concluído
+avalia,Avalia,Em desenvolvimento do MVP,Teste com o departamento Digital,2025,Conexão com API da Dorina IA,Concluído
+avalia,Avalia,Em desenvolvimento do MVP,Teste com o departamento Digital,2025,Mudança automática de status,Concluído
+avalia,Avalia,Em desenvolvimento do MVP,Teste com o departamento Digital,2025,Inserção de páginas,Concluído
+avalia,Avalia,Em desenvolvimento do MVP,Teste com o departamento Digital,2025,Exportar .docx com as imagens,Em andamento
+avalia,Avalia,Em desenvolvimento do MVP,Teste com o departamento Digital,2026,Dashboard,Planejado
+avalia,Avalia,Em desenvolvimento do MVP,Teste com o departamento Digital,2026,Ajustes na função comentários,Planejado
+avalia,Avalia,Em desenvolvimento do MVP,Teste com o departamento Digital,2026,Ajuste na relação com arquivos emf,Em andamento
+clockfacil,Clockfácil,Pausado,Teste com o departamento Gráfica,2024,Levantamento de specs,Concluído
+clockfacil,Clockfácil,Pausado,Teste com o departamento Gráfica,2024,Criação do banco de dados,Concluído
+clockfacil,Clockfácil,Pausado,Teste com o departamento Gráfica,2024,Construção da lógica principal do backend,Concluído
+clockfacil,Clockfácil,Pausado,Teste com o departamento Gráfica,2024,Implementação do fluxo de registro,Concluído
+clockfacil,Clockfácil,Pausado,Teste com o departamento Gráfica,2024,Criada página de registro de horário,Concluído
+clockfacil,Clockfácil,Pausado,Teste com o departamento Gráfica,2025,Validada a lógica de funcionamento,Concluído
+clockfacil,Clockfácil,Pausado,Teste com o departamento Gráfica,2025,MVP pronto para teste,Concluído
+clockfacil,Clockfácil,Pausado,Teste com o departamento Gráfica,2025,Teste em tablets,Concluído
+clockfacil,Clockfácil,Pausado,Teste com o departamento Gráfica,2025,Disponibilizar no servidor interno,Planejado
+clockfacil,Clockfácil,Pausado,Teste com o departamento Gráfica,2025,Conectar ao Clockfy,Planejado
+conor,Conor,Em desenvolvimento do MVP,Concluir testes iniciais de funcionamento,2025,Início do desenvolvimento,Concluído
+conor,Conor,Em desenvolvimento do MVP,Concluir testes iniciais de funcionamento,2025,Upload de excel,Concluído
+conor,Conor,Em desenvolvimento do MVP,Concluir testes iniciais de funcionamento,2025,Conexão com o Supabase,Concluído
+conor,Conor,Em desenvolvimento do MVP,Concluir testes iniciais de funcionamento,2025,Ajuste de layout e UI/UX,Concluído
+conor,Conor,Em desenvolvimento do MVP,Concluir testes iniciais de funcionamento,2025,Implementada lógica de login,Concluído
+conor,Conor,Em desenvolvimento do MVP,Concluir testes iniciais de funcionamento,2025,Ajustada aba Orçamentos,Concluído
+conor,Conor,Em desenvolvimento do MVP,Concluir testes iniciais de funcionamento,2025,Ajustada aba Despesas,Concluído
+conor,Conor,Em desenvolvimento do MVP,Concluir testes iniciais de funcionamento,2025,Criada tela de perfil,Concluído
+conor,Conor,Em desenvolvimento do MVP,Concluir testes iniciais de funcionamento,2025,Correção na tela de Admin,Concluído
+conor,Conor,Em desenvolvimento do MVP,Concluir testes iniciais de funcionamento,2025,Correção nos papéis dos usuários,Concluído
+conor,Conor,Em desenvolvimento do MVP,Concluir testes iniciais de funcionamento,2025,Atualização database no Supabase,Concluído
+conor,Conor,Em desenvolvimento do MVP,Concluir testes iniciais de funcionamento,2025,Corrigido upload de arquivos,Concluído
+conor,Conor,Em desenvolvimento do MVP,Concluir testes iniciais de funcionamento,2026,Testes internos de funcionalidade,Planejado
+conor,Conor,Em desenvolvimento do MVP,Concluir testes iniciais de funcionamento,2026,Deploy do MVP,Planejado
+conor,Conor,Em desenvolvimento do MVP,Concluir testes iniciais de funcionamento,2026,Teste com grupo reduzido de usuários,Planejado
+dorina-ia,Dorina IA,"Treinamento focado no Digital; Ajustes de acessibilidade na Plataforma",Fine-tuning genérico para o Braille,2024,Divisão de categorias de imagem,Concluído
+dorina-ia,Dorina IA,"Treinamento focado no Digital; Ajustes de acessibilidade na Plataforma",Fine-tuning genérico para o Braille,2024,Levantamento de specs dos departamentos Braille e Digital,Concluído
+dorina-ia,Dorina IA,"Treinamento focado no Digital; Ajustes de acessibilidade na Plataforma",Fine-tuning genérico para o Braille,2024,Engenharia de prompt Braille,Concluído
+dorina-ia,Dorina IA,"Treinamento focado no Digital; Ajustes de acessibilidade na Plataforma",Fine-tuning genérico para o Braille,2024,Engenharia de prompt Digital,Concluído
+dorina-ia,Dorina IA,"Treinamento focado no Digital; Ajustes de acessibilidade na Plataforma",Fine-tuning genérico para o Braille,2024,Levantamento de dataset braille,Concluído
+dorina-ia,Dorina IA,"Treinamento focado no Digital; Ajustes de acessibilidade na Plataforma",Fine-tuning genérico para o Braille,2024,Implementado primeiro fine-tuning Braille,Concluído
+dorina-ia,Dorina IA,"Treinamento focado no Digital; Ajustes de acessibilidade na Plataforma",Fine-tuning genérico para o Braille,2024,Levantamento de dataset Digital,Concluído
+dorina-ia,Dorina IA,"Treinamento focado no Digital; Ajustes de acessibilidade na Plataforma",Fine-tuning genérico para o Braille,2024,Implementado fine-tuning Digital para Ilustração,Concluído
+dorina-ia,Dorina IA,"Treinamento focado no Digital; Ajustes de acessibilidade na Plataforma",Fine-tuning genérico para o Braille,2024,Implementado fine-tuning Digital para Mapas,Concluído
+dorina-ia,Dorina IA,"Treinamento focado no Digital; Ajustes de acessibilidade na Plataforma",Fine-tuning genérico para o Braille,2024,Grupo de Estudos de Mapas,Concluído
+dorina-ia,Dorina IA,"Treinamento focado no Digital; Ajustes de acessibilidade na Plataforma",Fine-tuning genérico para o Braille,2025,Alteração completa do design da plataforma,Concluído
+dorina-ia,Dorina IA,"Treinamento focado no Digital; Ajustes de acessibilidade na Plataforma",Fine-tuning genérico para o Braille,2025,Teste de acessibilidade e usabilidade,Concluído
+dorina-ia,Dorina IA,"Treinamento focado no Digital; Ajustes de acessibilidade na Plataforma",Fine-tuning genérico para o Braille,2025,Criação da Central de Ajuda - JSM,Concluído
+dorina-ia,Dorina IA,"Treinamento focado no Digital; Ajustes de acessibilidade na Plataforma",Fine-tuning genérico para o Braille,2025,Início da redação do Manual de descrição de mapas,Concluído
+dorina-ia,Dorina IA,"Treinamento focado no Digital; Ajustes de acessibilidade na Plataforma",Fine-tuning genérico para o Braille,2025,Implementado fine-tuning Braille para Mapas - EF II,Concluído
+dorina-ia,Dorina IA,"Treinamento focado no Digital; Ajustes de acessibilidade na Plataforma",Fine-tuning genérico para o Braille,2025,Implementado fine-tuning Braille genérico,Concluído
+dorina-ia,Dorina IA,"Treinamento focado no Digital; Ajustes de acessibilidade na Plataforma",Fine-tuning genérico para o Braille,2025,Implementado fine-tuning Braille Mapas - EF I,Em andamento
+dorina-ia,Dorina IA,"Treinamento focado no Digital; Ajustes de acessibilidade na Plataforma",Fine-tuning genérico para o Braille,2025,Implementado fine-tuning para o marketing,Concluído
+dorina-ia,Dorina IA,"Treinamento focado no Digital; Ajustes de acessibilidade na Plataforma",Fine-tuning genérico para o Braille,2025,Engenharia de prompt digital,Em andamento
+dorina-ia,Dorina IA,"Treinamento focado no Digital; Ajustes de acessibilidade na Plataforma",Fine-tuning genérico para o Braille,2025,Correção de acessibilidade da plataforma,Em andamento
+dorina-ia,Dorina IA,"Treinamento focado no Digital; Ajustes de acessibilidade na Plataforma",Fine-tuning genérico para o Braille,2026,Pesquisa sobre uso de IA,Planejado
+dorina-ia,Dorina IA,"Treinamento focado no Digital; Ajustes de acessibilidade na Plataforma",Fine-tuning genérico para o Braille,2026,"Pesquisa sobre aplicabilidade de simbologia e cores em mapas",Planejado
+dorina-ia,Dorina IA,"Treinamento focado no Digital; Ajustes de acessibilidade na Plataforma",Fine-tuning genérico para o Braille,2026,Levantar dataset para infográficos,Planejado
+dorina-ia,Dorina IA,"Treinamento focado no Digital; Ajustes de acessibilidade na Plataforma",Fine-tuning genérico para o Braille,2026,Levantar dataset para HQS,Planejado
+dorina-ia,Dorina IA,"Treinamento focado no Digital; Ajustes de acessibilidade na Plataforma",Fine-tuning genérico para o Braille,2026,Conclusão do Manual de descrição de mapas,Planejado
+linear,Linear,Pausado o desenvolvimento,Desenvolver pré-processamento para extrair negrito e itálico,2025,Criar a base funcional que transforma PDFs em imagens,Concluído
+linear,Linear,Pausado o desenvolvimento,Desenvolver pré-processamento para extrair negrito e itálico,2025,Gerar descrições via LLM,Concluído
+linear,Linear,Pausado o desenvolvimento,Desenvolver pré-processamento para extrair negrito e itálico,2025,Gerar página em JSON,Concluído
+linear,Linear,Pausado o desenvolvimento,Desenvolver pré-processamento para extrair negrito e itálico,2025,Criar plataforma de teste da ferramenta,Concluído
+linear,Linear,Pausado o desenvolvimento,Desenvolver pré-processamento para extrair negrito e itálico,2025,Criar a base funcional que transforma PDFs em imagens,Concluído
+linear,Linear,Pausado o desenvolvimento,Desenvolver pré-processamento para extrair negrito e itálico,2025,QA Teste - Testar prompt para extrair a estrutura correta,Concluído
+linear,Linear,Pausado o desenvolvimento,Desenvolver pré-processamento para extrair negrito e itálico,2025,Desenvolver pré-processamento para extrair negrito e itálico,Em andamento
+linear,Linear,Pausado o desenvolvimento,Desenvolver pré-processamento para extrair negrito e itálico,2025,Mergear marcações com o JSON gerado pela LLM,Planejado
+linear,Linear,Pausado o desenvolvimento,Desenvolver pré-processamento para extrair negrito e itálico,2026,Criar banco de dados para salvar as imagens,Planejado
+linear,Linear,Pausado o desenvolvimento,Desenvolver pré-processamento para extrair negrito e itálico,2026,Desenvolver plataforma de produção,Planejado
+linear,Linear,Pausado o desenvolvimento,Desenvolver pré-processamento para extrair negrito e itálico,2026,Aplicar fila de processamento,Planejado
+linear,Linear,Pausado o desenvolvimento,Desenvolver pré-processamento para extrair negrito e itálico,2026,Desenvolver integração com a Dorina IA,Planejado
+linear,Linear,Pausado o desenvolvimento,Desenvolver pré-processamento para extrair negrito e itálico,2026,Início dos testes de integração com Google Vision API,Planejado
+linear,Linear,Pausado o desenvolvimento,Desenvolver pré-processamento para extrair negrito e itálico,2026,"Mapeamento do ""Conheça seu livro"" como referência de estilo",Planejado
+linear,Linear,Pausado o desenvolvimento,Desenvolver pré-processamento para extrair negrito e itálico,2026,Capturar posição/estrutura visual para HTML/EPUB,Planejado
+linear,Linear,Pausado o desenvolvimento,Desenvolver pré-processamento para extrair negrito e itálico,2026,Adaptar a PB para receber JSON,Planejado
+linear,Linear,Pausado o desenvolvimento,Desenvolver pré-processamento para extrair negrito e itálico,2026,Adaptar a PB para exportar JSON,Planejado
+linear,Linear,Pausado o desenvolvimento,Desenvolver pré-processamento para extrair negrito e itálico,2026,Integração com a PB,Planejado
+linear,Linear,Pausado o desenvolvimento,Desenvolver pré-processamento para extrair negrito e itálico,2026,Teste ponta a ponta,Planejado
+linear,Linear,Pausado o desenvolvimento,Desenvolver pré-processamento para extrair negrito e itálico,2026,Correção pós-teste,Planejado
+linear,Linear,Pausado o desenvolvimento,Desenvolver pré-processamento para extrair negrito e itálico,2026,Piloto em produção,Planejado
+linear,Linear,Pausado o desenvolvimento,Desenvolver pré-processamento para extrair negrito e itálico,2026,Correção pós-piloto,Planejado
+linear,Linear,Pausado o desenvolvimento,Desenvolver pré-processamento para extrair negrito e itálico,2026,Início da captura de dataset para fine-tuning,Planejado
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2023,Levantamento de specs,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2023,Extração de texto do pdf,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2023,Aprimorar detecção de itálico,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2023,"Implementar adaptação automática para negritos, itálicos e afins",Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2023,Regra para conversão de barrar,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2023,Ajustes de responsividade,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2023,Otimizar layout,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2023,Adicionar campo de busca de usuários,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2023,Controle de usuários no acesso de documentos,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2023,Remover linhas vazias ao importar o pdf,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2023,Campo para legenda na caixa de descrição de imagens,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2023,Função sublinhado,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2023,Inserir quadro vazio,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2023,Exibir símbolos de formatação,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2023,Adicionar estilos de títulos,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2023,Menu inserir,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2023,Menu layout,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2023,Menu referências,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2023,Menu Revisão,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2023,Menu exibir,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2023,Controle de zoom,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2023,Exibir número de páginas e linhas,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2023,Ver em braille,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2023,Formatação de maiúsculas e minúsculas,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2023,Gerenciar status do documento,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2023,Exportar pdf,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2023,Resumo semanal por e-mail,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2023,Modal informativo ao acessar documento,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2023,Contexto matemático,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2023,Contexto informático,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2023,Setas para cima e para baixo,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2023,Arrastar elementos de imagem,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2023,Otimização para pcs lentos,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Inserção de caracteres especiais,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Visualizar documentos em listas,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Bloquear edição simultânea,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Converter ponto em sinal de multiplicação,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Inserir numeração automaticamente ao importar pdf,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Ajustes de usabilidade ao colar,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Localizar e substituir somente na seleção,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,<F-> e <F+> encadeado em um bloco de texto,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Ajustar exportação de nota de rodapé,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Substituir apóstrofes na exportação,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Implementar solicitação de descrição de todas as imagens,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Salvar posição do cursor ao sair da página,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Adicionar regra de parênteses simples,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Quebrar linhas no contexto informático ao exportar txt,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Remover negrito dos números na importação,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Criar visualização otimizada para edição,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Ajustes na gestão de usuário,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Criar menu de contexto na listagem para executar ações,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Exibir que o documento está sendo editado para outra pessoa na listagem,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Implementar módulo focado na descrição de imagens e exportação de DOCX,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Substituir as fontes do sistema por fontes OpenSource,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Adicionar botão de desativar no cadastro de usuário,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,"Implementar funcionalidade de apagar formatação, copiar formatação e sublinhar texto",Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,"Implementar marcadores de textos (lista de bullets, setas ou quadrados)",Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Inserir funcionalidade para Quadros e Tabelas,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Opção de Notas e Letras Estrangeiras,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Inserir opções de modelos de títulos,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Implementar regra do bloco de recuo na conversão,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Permitir texto nos lados da seta,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,"Implementar funcionalidade 'Quebra de Parte'",Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Implementar todo o alfabeto grego nos símbolos,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Implementar visualização de histórico de alteração dos documentos em Braille,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Implementar nova funcionalidade - Figuras,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Implementar funcionalidade de: Identificação,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Implementar funcionalidade de: Paginação,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Inserir nova funcionalidade de Sumário,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Implementar funcionalidade Capa e Folha de Rosto,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Implementar funcionalidade de Ficha Técnica,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2024,Ajustes no cadastro de figuras,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2025,Implementar avaliação de imagens destacadas pela API,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2025,Editar formatação do docx exportado,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2025,Adicionar novo parâmetro nas chamadas de descrição de imagem,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2025,"Permitir que a grade braille seja editável em documentos do tipo 'arco'",Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2025,"Criar ambiente 'beta' para o editor no ambiente de produção",Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2025,Pausar notificações por email,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2025,"Edição da função 'Dicionário'",Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2025,Corrigir quebra de linha em links,Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2025,"Espaço em palavras com 'fi'",Concluído
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2026,Erro de espaço no contexto ao aplicar recuo,Planejado
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2026,Erro em caractere,Planejado
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2026,"Separar a plataforma em ecossistema de produção com divisão por área (braille, digital e áudio)",Planejado
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2026,Implementar funcionalidade de Identificação,Planejado
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2026,Copiar comportamento do word na movimentação de parágrafos entre páginas,Planejado
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2026,"Implementar funcionalidade 'Quebra de Parte'",Planejado
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2026,Melhorias no sumário,Planejado
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2026,Corrigir Representação de ângulo,Planejado
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2026,Grafia química,Planejado
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2026,"Localizar e substituir somente na seleção (copiar comportamento do word ao mostrar lista)",Planejado
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2026,Reestruturar recuo,Planejado
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2026,"Criar modo desenho para visualização e edição de figuras no editor (retomar)",Planejado
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2026,Adicionar atalhos,Planejado
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2026,Sincronizar destaque entre visualização em braille e versão em tinta,Planejado
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2026,Modelos de página,Planejado
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2026,Sinal de grau no corretor,Planejado
+plataforma-braille,Plataforma Braille,Aguardando fundos,Correção de erros reportados na Central de ajuda,2026,Contexto em tabelas,Planejado
+puncao,Punção,Em teste com o departamento de Atendimento,Levantamento de feedback e correções com base na experiência do Atendimento,2025,Levantamento de specs,Concluído
+puncao,Punção,Em teste com o departamento de Atendimento,Levantamento de feedback e correções com base na experiência do Atendimento,2025,Desenho inicial de funcionalidade,Concluído
+puncao,Punção,Em teste com o departamento de Atendimento,Levantamento de feedback e correções com base na experiência do Atendimento,2025,Mapeamento completo de alfabeto,Concluído
+puncao,Punção,Em teste com o departamento de Atendimento,Levantamento de feedback e correções com base na experiência do Atendimento,2025,Implementado MVP,Concluído
+puncao,Punção,Em teste com o departamento de Atendimento,Levantamento de feedback e correções com base na experiência do Atendimento,2025,Correção de atalhos,Concluído
+puncao,Punção,Em teste com o departamento de Atendimento,Levantamento de feedback e correções com base na experiência do Atendimento,2025,Implementada função arrastar,Concluído
+puncao,Punção,Em teste com o departamento de Atendimento,Levantamento de feedback e correções com base na experiência do Atendimento,2025,Ajuste fino na sidebar,Concluído
+puncao,Punção,Em teste com o departamento de Atendimento,Levantamento de feedback e correções com base na experiência do Atendimento,2025,Correção no encoding,Concluído
+puncao,Punção,Em teste com o departamento de Atendimento,Levantamento de feedback e correções com base na experiência do Atendimento,2025,Implementada caixa de texto,Concluído
+puncao,Punção,Em teste com o departamento de Atendimento,Levantamento de feedback e correções com base na experiência do Atendimento,2025,Implementada ferramenta de seleção,Concluído
+puncao,Punção,Em teste com o departamento de Atendimento,Levantamento de feedback e correções com base na experiência do Atendimento,2026,Criação de login e autenticação,Planejado
+puncao,Punção,Em teste com o departamento de Atendimento,Levantamento de feedback e correções com base na experiência do Atendimento,2026,Migração para domínio personalizado,Planejado
+puncao,Punção,Em teste com o departamento de Atendimento,Levantamento de feedback e correções com base na experiência do Atendimento,2026,Lançamento oficial da ferramenta,Planejado
+puncao,Punção,Em teste com o departamento de Atendimento,Levantamento de feedback e correções com base na experiência do Atendimento,2026,Implementar forma geométrica triângulo,Planejado
+puncao,Punção,Em teste com o departamento de Atendimento,Levantamento de feedback e correções com base na experiência do Atendimento,2026,Implementar forma geométrica quadrado,Planejado
+puncao,Punção,Em teste com o departamento de Atendimento,Levantamento de feedback e correções com base na experiência do Atendimento,2026,Implementar forma geométrica círculo,Planejado
+puncao,Punção,Em teste com o departamento de Atendimento,Levantamento de feedback e correções com base na experiência do Atendimento,2026,Implementar forma linha,Planejado
+puncao,Punção,Em teste com o departamento de Atendimento,Levantamento de feedback e correções com base na experiência do Atendimento,2026,Implementar modo mesa de luz,Planejado
