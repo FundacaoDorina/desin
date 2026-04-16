@@ -15,5 +15,7 @@ export interface Project {
   name: string;
   status: string;
   nextStep: string;
+  documentationContent?: string;
+  kind?: "default" | "scripts";
   timeline: TimelineYear[];
 }

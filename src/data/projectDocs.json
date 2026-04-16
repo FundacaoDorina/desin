@@ -1,0 +1,14 @@
+[
+  {
+    "project_id": "avalia",
+    "order": 1,
+    "title": "Visão geral",
+    "content": "Objetivo do projeto, escopo e público-alvo."
+  },
+  {
+    "project_id": "avalia",
+    "order": 2,
+    "title": "Como usar",
+    "content": "Fluxo principal de uso e pontos de atenção."
+  }
+]

@@ -1,7 +1,7 @@
-import type { TimelineYear } from "@/types/project";
+import type { Project } from "@/types/project";
 
 interface ProjectListProps {
-  projects: { id: string; name: string; timeline: TimelineYear[]; }[];
+  projects: Project[];
   selectedProject: string | null;
   onSelectProject: (id: string) => void;
   minimized?: boolean;
@@ -37,6 +37,7 @@ const ProjectList = ({
               <span className="block truncate">
                 {project.name}
                 {(() => {
+                  if (project.kind === "scripts") return "";
                   const allItems = project.timeline.flatMap((y) => y.items);
                   if (allItems.length === 0) return '';
                   const doneCount = allItems.filter((item) => item.color === "success").length;
@@ -70,6 +71,7 @@ const ProjectList = ({
           >
             {project.name}
             {(() => {
+              if (project.kind === "scripts") return "";
               const allItems = project.timeline.flatMap((y) => y.items);
               if (allItems.length === 0) return '';
               const doneCount = allItems.filter((item) => item.color === "success").length;

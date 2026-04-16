@@ -343,5 +343,13 @@
         ]
       }
     ]
+  },
+  {
+    "id": "scripts",
+    "name": "Scripts",
+    "status": "Catálogo de scripts utilitários",
+    "nextStep": "Adicionar e documentar novos scripts conforme necessidade",
+    "kind": "scripts",
+    "timeline": []
   }
 ]
