@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Header from "@/components/Header";
 import ProjectList from "@/components/ProjectList";
 import ProjectDetail from "@/components/ProjectDetail";
@@ -10,6 +10,7 @@ import { useProjectDocs } from "@/hooks/useProjectDocs";
 import { Loader2, AlertTriangle, RefreshCw } from "lucide-react";
 
 const DOC_TITLE_PREFIX = "[[DOC_TITLE]]";
+const SCRIPTS_VIRTUAL_PROJECT_ID = "__scripts__";
 
 function renderInlineFormatting(text: string) {
   const tokens = text.split(
@@ -126,8 +127,24 @@ const Index = () => {
   const { projects, isLoading, isError, isFromSheet, refetch } = useProjects();
   const { scripts } = useScripts();
   const { projectDocs } = useProjectDocs();
-  const selectedProject = projects.find((p) => p.id === selectedProjectId);
-  const isScriptsProject = selectedProject?.kind === "scripts";
+  const hasScriptsProject = projects.some((project) => project.kind === "scripts");
+  const projectsWithScripts = useMemo(() => {
+    if (hasScriptsProject || scripts.length === 0) return projects;
+
+    return [
+      ...projects,
+      {
+        id: SCRIPTS_VIRTUAL_PROJECT_ID,
+        name: "Scripts",
+        status: "",
+        nextStep: "",
+        kind: "scripts" as const,
+        timeline: [],
+      },
+    ];
+  }, [hasScriptsProject, projects, scripts.length]);
+  const selectedProject = projectsWithScripts.find((p) => p.id === selectedProjectId);
+  const isScriptsProject = selectedProject?.kind === "scripts" || selectedProjectId === SCRIPTS_VIRTUAL_PROJECT_ID;
   const selectedDocumentation =
     selectedProject ? projectDocs[selectedProject.id] ?? selectedProject.documentationContent : "";
 
@@ -165,7 +182,7 @@ const Index = () => {
 
             {!selectedProject ? (
               <ProjectList
-                projects={projects}
+                projects={projectsWithScripts}
                 selectedProject={selectedProjectId}
                 onSelectProject={handleSelectProject}
               />
@@ -174,7 +191,7 @@ const Index = () => {
                 <div className="flex flex-col md:flex-row gap-4 md:gap-6">
                   <aside className="flex-shrink-0">
                     <ProjectList
-                      projects={projects}
+                      projects={projectsWithScripts}
                       selectedProject={selectedProjectId}
                       onSelectProject={handleSelectProject}
                       minimized
