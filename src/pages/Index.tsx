@@ -2,18 +2,138 @@ import { useState } from "react";
 import Header from "@/components/Header";
 import ProjectList from "@/components/ProjectList";
 import ProjectDetail from "@/components/ProjectDetail";
+import ScriptsDetail from "@/components/ScriptsDetail";
 import Timeline from "@/components/Timeline";
 import { useProjects } from "@/hooks/useProjects";
+import { useScripts } from "@/hooks/useScripts";
+import { useProjectDocs } from "@/hooks/useProjectDocs";
 import { Loader2, AlertTriangle, RefreshCw } from "lucide-react";
+
+const DOC_TITLE_PREFIX = "[[DOC_TITLE]]";
+
+function renderInlineFormatting(text: string) {
+  const tokens = text.split(
+    /(\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)|\*\*[^*]+\*\*|__[^_]+__|\*[^*]+\*|_[^_]+_)/
+  );
+
+  return tokens.map((token, index) => {
+    if (!token) return null;
+
+    const linkMatch = token.match(/^\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)$/);
+    if (linkMatch) {
+      const [, label, href] = linkMatch;
+      return (
+        <a
+          key={`link-${index}`}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline underline-offset-2 hover:opacity-80"
+        >
+          {label}
+        </a>
+      );
+    }
+
+    if (
+      (token.startsWith("**") && token.endsWith("**")) ||
+      (token.startsWith("__") && token.endsWith("__"))
+    ) {
+      return <strong key={`strong-${index}`}>{token.slice(2, -2)}</strong>;
+    }
+
+    if (
+      (token.startsWith("*") && token.endsWith("*")) ||
+      (token.startsWith("_") && token.endsWith("_"))
+    ) {
+      return <em key={`em-${index}`}>{token.slice(1, -1)}</em>;
+    }
+
+    return <span key={`text-${index}`}>{token}</span>;
+  });
+}
+
+function renderDocumentationBlocks(documentation: string) {
+  return documentation.split(/\n{2,}/).map((block, index) => {
+    const trimmedBlock = block.trim();
+    if (!trimmedBlock) return null;
+
+    const [firstLine, ...restLines] = trimmedBlock.split("\n");
+    const hasTitle = firstLine.startsWith(DOC_TITLE_PREFIX);
+    const title = hasTitle ? firstLine.replace(DOC_TITLE_PREFIX, "").trim() : "";
+    const content = hasTitle ? restLines.join("\n").trim() : trimmedBlock;
+
+    return (
+      <div key={`${index}-${firstLine}`} className="space-y-1 md:space-y-2">
+        {hasTitle && (
+          <h4 className="font-bebas font-bold text-card-foreground text-2xl md:text-3xl">
+            {renderInlineFormatting(title)}
+          </h4>
+        )}
+        {content &&
+          (() => {
+            const lines = content.split("\n");
+            const hasList = lines.some((line) => line.trim().startsWith("- "));
+
+            if (!hasList) {
+              return (
+                <p className="text-card-foreground text-base md:text-lg whitespace-pre-line">
+                  {lines.map((line, lineIndex) => (
+                    <span key={`line-${lineIndex}`}>
+                      {renderInlineFormatting(line)}
+                      {lineIndex < lines.length - 1 && <br />}
+                    </span>
+                  ))}
+                </p>
+              );
+            }
+
+            return (
+              <div className="space-y-2 text-card-foreground text-base md:text-lg">
+                <ul className="list-disc pl-6 space-y-1">
+                  {lines
+                    .filter((line) => line.trim().startsWith("- "))
+                    .map((line, listIndex) => (
+                      <li key={`li-${listIndex}`}>
+                        {renderInlineFormatting(line.trim().slice(2))}
+                      </li>
+                    ))}
+                </ul>
+                {lines.some((line) => line.trim() && !line.trim().startsWith("- ")) && (
+                  <p>
+                    {lines
+                      .filter((line) => line.trim() && !line.trim().startsWith("- "))
+                      .map((line, textIndex, arr) => (
+                        <span key={`mixed-${textIndex}`}>
+                          {renderInlineFormatting(line)}
+                          {textIndex < arr.length - 1 && <br />}
+                        </span>
+                      ))}
+                  </p>
+                )}
+              </div>
+            );
+          })()}
+      </div>
+    );
+  });
+}
 
 const Index = () => {
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
+  const [isDocumentationOpen, setIsDocumentationOpen] = useState(false);
 
   const { projects, isLoading, isError, isFromSheet, refetch } = useProjects();
+  const { scripts } = useScripts();
+  const { projectDocs } = useProjectDocs();
   const selectedProject = projects.find((p) => p.id === selectedProjectId);
+  const isScriptsProject = selectedProject?.kind === "scripts";
+  const selectedDocumentation =
+    selectedProject ? projectDocs[selectedProject.id] ?? selectedProject.documentationContent : "";
 
   const handleSelectProject = (id: string) => {
     setSelectedProjectId(id);
+    setIsDocumentationOpen(false);
   };
 
   return (
@@ -61,14 +181,40 @@ const Index = () => {
                     />
                   </aside>
                   <div className="flex-1">
-                    <ProjectDetail
-                      name={selectedProject.name}
-                      status={selectedProject.status}
-                      nextStep={selectedProject.nextStep}
-                    />
+                    {isScriptsProject ? (
+                      <ScriptsDetail scripts={scripts} />
+                    ) : (
+                      <ProjectDetail
+                        name={selectedProject.name}
+                        status={selectedProject.status}
+                        nextStep={selectedProject.nextStep}
+                        documentationContent={selectedDocumentation}
+                        isDocumentationOpen={isDocumentationOpen}
+                        onToggleDocumentation={() => setIsDocumentationOpen((prev) => !prev)}
+                      />
+                    )}
                   </div>
                 </div>
-                <Timeline timeline={selectedProject.timeline} />
+                {!isScriptsProject && (
+                  isDocumentationOpen ? (
+                    <section className="bg-sidebar-light rounded p-4 md:p-6 lg:p-8 mt-6">
+                      <h3 className="text-card-foreground font-bebas font-bold text-3xl md:text-4xl lg:text-5xl mb-3 md:mb-4">
+                        Documentação
+                      </h3>
+                      {selectedDocumentation ? (
+                        <div className="space-y-4 md:space-y-5">
+                          {renderDocumentationBlocks(selectedDocumentation)}
+                        </div>
+                      ) : (
+                        <p className="text-card-foreground text-base md:text-lg whitespace-pre-line">
+                          Sem documentação cadastrada para este projeto.
+                        </p>
+                      )}
+                    </section>
+                  ) : (
+                    <Timeline timeline={selectedProject.timeline} />
+                  )
+                )}
               </>
             )}
           </>

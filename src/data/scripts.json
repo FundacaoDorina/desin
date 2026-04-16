@@ -1,0 +1,16 @@
+[
+  {
+    "id": "script-exemplo-1",
+    "name": "Validador de Planilhas",
+    "summary": "Valida estrutura e campos obrigatórios em planilhas recebidas.",
+    "howItWorks": "Lê o arquivo, confere colunas esperadas e retorna um relatório com erros e avisos.",
+    "usage": "Execute com o caminho do arquivo e revise o relatório gerado para corrigir inconsistências."
+  },
+  {
+    "id": "script-exemplo-2",
+    "name": "Organizador de Arquivos",
+    "summary": "Padroniza nomes e organiza arquivos em pastas por tipo.",
+    "howItWorks": "Percorre diretórios, aplica regras de nomenclatura e move os arquivos para a estrutura definida.",
+    "usage": "Informe a pasta de origem e rode em modo de teste antes de aplicar mudanças definitivas."
+  }
+]
