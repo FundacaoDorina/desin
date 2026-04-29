@@ -38,7 +38,7 @@ const ScriptsDetail = ({ scripts }: ScriptsDetailProps) => {
       </div>
 
       <div className="grid gap-4 md:gap-6 lg:gap-8 md:grid-cols-[280px_1fr]">
-        <aside className="bg-sidebar-light rounded p-3">
+        <aside className="bg-sidebar-light rounded p-3" aria-label="Navegação de scripts">
           <h3 className="font-bebas font-bold text-card-foreground text-2xl mb-3">Lista</h3>
           <div className="space-y-2">
             {scripts.map((script) => (
@@ -46,6 +46,7 @@ const ScriptsDetail = ({ scripts }: ScriptsDetailProps) => {
                 key={script.id}
                 type="button"
                 onClick={() => setSelectedScriptId(script.id)}
+                aria-current={selectedScript.id === script.id ? "page" : undefined}
                 className={`w-full text-left rounded px-3 py-2 font-bebas font-bold text-xl transition-colors ${
                   selectedScript.id === script.id
                     ? "bg-primary text-primary-foreground"
