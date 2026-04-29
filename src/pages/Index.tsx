@@ -155,17 +155,23 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <a
+        href="#conteudo-principal"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-primary focus:text-primary-foreground focus:px-3 focus:py-2 focus:rounded"
+      >
+        Pular para o conteúdo principal
+      </a>
       <Header />
-      <main className="bg-card mx-4 my-6 md:mx-8 md:my-8 lg:mx-12 lg:my-10 p-3 md:p-5 lg:p-7 xl:p-10 min-h-[80vh]">
+      <main id="conteudo-principal" className="bg-card mx-4 my-6 md:mx-8 md:my-8 lg:mx-12 lg:my-10 p-3 md:p-5 lg:p-7 xl:p-10 min-h-[80vh]">
         {isLoading ? (
-          <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
+          <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4" role="status" aria-live="polite">
             <Loader2 className="w-10 h-10 animate-spin text-muted-foreground" />
             <p className="text-muted-foreground font-bebas text-xl">Carregando projetos...</p>
           </div>
         ) : (
           <>
             {isError && (
-              <div className="flex items-center gap-2 mb-4 px-4 py-3 rounded bg-warning/20 text-warning-foreground border border-warning/30">
+              <div className="flex items-center gap-2 mb-4 px-4 py-3 rounded bg-warning/20 text-warning-foreground border border-warning/30" role="alert">
                 <AlertTriangle className="w-5 h-5 flex-shrink-0" />
                 <span className="font-bebas text-lg">
                   Não foi possível carregar da planilha. Exibindo dados locais.
@@ -214,7 +220,7 @@ const Index = () => {
                 </div>
                 {!isScriptsProject && (
                   isDocumentationOpen ? (
-                    <section className="bg-sidebar-light rounded p-4 md:p-6 lg:p-8 mt-6">
+                    <section id="project-documentation" className="bg-sidebar-light rounded p-4 md:p-6 lg:p-8 mt-6">
                       <h3 className="text-card-foreground font-bebas font-bold text-3xl md:text-4xl lg:text-5xl mb-3 md:mb-4">
                         Documentação
                       </h3>
@@ -244,9 +250,11 @@ const Index = () => {
             Dados sincronizados com Google Sheets
           </span>
           <button
+            type="button"
             onClick={() => refetch()}
             className="flex items-center gap-1 px-2 py-1 rounded hover:text-white/70 transition-colors"
             title="Atualizar dados"
+            aria-label="Atualizar dados sincronizados"
           >
             <RefreshCw className="w-3 h-3" />
           </button>

@@ -31,6 +31,8 @@ const ProjectDetail = ({
           <button
             type="button"
             onClick={onToggleDocumentation}
+            aria-expanded={isDocumentationOpen}
+            aria-controls="project-documentation"
             className="bg-primary text-primary-foreground hover:opacity-90 transition-opacity rounded p-2 md:p-3"
             title={isDocumentationOpen ? "Fechar documentação" : "Abrir documentação"}
             aria-label={isDocumentationOpen ? "Fechar documentação" : "Abrir documentação"}
