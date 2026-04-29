@@ -23,11 +23,13 @@ const ProjectList = ({
             Projetos
           </h2>
         </div>
-        <nav className="space-y-1">
+        <nav className="space-y-1" aria-label="Lista de projetos">
           {projects.map((project) => (
             <button
               key={project.id}
+              type="button"
               onClick={() => onSelectProject(project.id)}
+              aria-current={selectedProject === project.id ? "page" : undefined}
               className={`w-full text-left px-2 py-1 font-bebas font-bold text-lg leading-none transition-colors rounded whitespace-nowrap overflow-hidden text-ellipsis ${
                 selectedProject === project.id
                   ? "bg-primary text-primary-foreground"
@@ -59,11 +61,13 @@ const ProjectList = ({
           Projetos
         </h2>
       </div>
-      <nav className="space-y-4 md:space-y-6 lg:space-y-8">
+      <nav className="space-y-4 md:space-y-6 lg:space-y-8" aria-label="Lista de projetos">
         {projects.map((project) => (
           <button
             key={project.id}
+            type="button"
             onClick={() => onSelectProject(project.id)}
+            aria-current={selectedProject === project.id ? "page" : undefined}
             className="block w-full text-left font-bebas font-bold text-card-foreground hover:bg-primary hover:text-primary-foreground px-4 py-2 transition-colors rounded"
             style={{
               fontSize: 'calc(4rem - 2px)',
