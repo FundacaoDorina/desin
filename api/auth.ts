@@ -1,30 +1,44 @@
 import { issueAccessToken } from "./_lib/auth";
+import { getPasswordFromRequestBody } from "./_lib/parseBody";
 
-interface ApiRequest {
-  method?: string;
-  body?: { password?: string };
-}
-
-interface ApiResponse {
-  status: (statusCode: number) => ApiResponse;
-  json: (payload: unknown) => void;
-}
-
-export default async function handler(req: ApiRequest, res: ApiResponse) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Método não permitido." });
+export default async function handler(request: Request): Promise<Response> {
+  if (request.method !== "POST") {
+    return Response.json({ error: "Método não permitido." }, { status: 405 });
   }
 
-  const configuredPassword = process.env.ACCESS_PASSWORD;
-  if (!configuredPassword) {
-    return res.status(500).json({ error: "A senha de acesso não foi configurada." });
-  }
+  try {
+    const configuredPassword = process.env.ACCESS_PASSWORD?.trim();
+    if (!configuredPassword) {
+      return Response.json(
+        { error: "ACCESS_PASSWORD não configurado na Vercel (Production e Preview)." },
+        { status: 500 }
+      );
+    }
 
-  const providedPassword = req.body?.password;
-  if (!providedPassword || providedPassword !== configuredPassword) {
-    return res.status(401).json({ error: "Senha inválida." });
-  }
+    const tokenSecret = process.env.ACCESS_TOKEN_SECRET?.trim();
+    if (!tokenSecret) {
+      return Response.json(
+        { error: "ACCESS_TOKEN_SECRET não configurado na Vercel (Production e Preview)." },
+        { status: 500 }
+      );
+    }
 
-  const token = issueAccessToken();
-  return res.status(200).json({ token });
+    let body: unknown;
+    try {
+      body = await request.json();
+    } catch {
+      return Response.json({ error: "Corpo da requisição inválido." }, { status: 400 });
+    }
+
+    const providedPassword = getPasswordFromRequestBody(body)?.trim();
+    if (!providedPassword || providedPassword !== configuredPassword) {
+      return Response.json({ error: "Senha inválida." }, { status: 401 });
+    }
+
+    const token = issueAccessToken();
+    return Response.json({ token }, { status: 200 });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Erro ao processar login.";
+    return Response.json({ error: message }, { status: 500 });
+  }
 }
