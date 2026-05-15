@@ -30,7 +30,7 @@ const ProjectList = ({
               type="button"
               onClick={() => onSelectProject(project.id)}
               aria-current={selectedProject === project.id ? "page" : undefined}
-              className={`w-full text-left px-2 py-1 font-bebas font-bold text-lg leading-none transition-colors rounded whitespace-nowrap overflow-hidden text-ellipsis ${
+              className={`w-full text-left px-2 py-1 font-bebas font-bold text-lg leading-none transition-colors rounded whitespace-nowrap overflow-hidden text-ellipsis focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
                 selectedProject === project.id
                   ? "bg-primary text-primary-foreground"
                   : "hover:bg-primary hover:text-primary-foreground"
@@ -68,7 +68,7 @@ const ProjectList = ({
             type="button"
             onClick={() => onSelectProject(project.id)}
             aria-current={selectedProject === project.id ? "page" : undefined}
-            className="block w-full text-left font-bebas font-bold text-card-foreground hover:bg-primary hover:text-primary-foreground px-4 py-2 transition-colors rounded"
+            className="block w-full text-left font-bebas font-bold text-card-foreground hover:bg-primary hover:text-primary-foreground px-4 py-2 transition-colors rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             style={{
               fontSize: 'calc(4rem - 2px)',
             }}

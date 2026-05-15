@@ -33,11 +33,11 @@ const ProjectDetail = ({
             onClick={onToggleDocumentation}
             aria-expanded={isDocumentationOpen}
             aria-controls="project-documentation"
-            className="bg-primary text-primary-foreground hover:opacity-90 transition-opacity rounded p-2 md:p-3"
-            title={isDocumentationOpen ? "Fechar documentação" : "Abrir documentação"}
+            className="bg-primary text-primary-foreground hover:opacity-90 transition-opacity rounded p-2 md:p-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             aria-label={isDocumentationOpen ? "Fechar documentação" : "Abrir documentação"}
           >
             <Plus
+              aria-hidden="true"
               className={`w-6 h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 transition-transform ${
                 isDocumentationOpen ? "rotate-45" : ""
               }`}
@@ -46,25 +46,24 @@ const ProjectDetail = ({
         )}
       </div>
 
-      <div className="space-y-4 md:space-y-6">
+      <dl className="space-y-4 md:space-y-6">
         <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-0">
-          <span className="text-card-foreground font-bebas font-bold text-2xl md:text-3xl lg:text-4xl bg-sidebar-light px-3 py-1 rounded leading-loose">
+          <dt className="text-card-foreground font-bebas font-bold text-2xl md:text-3xl lg:text-4xl bg-sidebar-light px-3 py-1 rounded leading-loose">
             Status:
-          </span>
-          <span className="text-card-foreground font-bebas font-bold text-2xl md:text-3xl lg:text-4xl md:ml-3 leading-loose">
+          </dt>
+          <dd className="text-card-foreground font-bebas font-bold text-2xl md:text-3xl lg:text-4xl md:ml-3 leading-loose m-0">
             {status}
-          </span>
+          </dd>
         </div>
         <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-0">
-          <span className="text-card-foreground font-bebas font-bold text-2xl md:text-3xl lg:text-4xl bg-sidebar-light px-3 py-1 rounded leading-loose">
+          <dt className="text-card-foreground font-bebas font-bold text-2xl md:text-3xl lg:text-4xl bg-sidebar-light px-3 py-1 rounded leading-loose">
             Próximo passo:
-          </span>
-          <span className="text-card-foreground font-bebas font-bold text-2xl md:text-3xl lg:text-4xl md:ml-3 leading-loose">
+          </dt>
+          <dd className="text-card-foreground font-bebas font-bold text-2xl md:text-3xl lg:text-4xl md:ml-3 leading-loose m-0">
             {nextStep}
-          </span>
+          </dd>
         </div>
-      </div>
-
+      </dl>
     </div>
   );
 };

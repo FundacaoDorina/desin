@@ -2,6 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { FormEvent, useState } from "react";
@@ -76,16 +77,25 @@ const App = () => {
               <p className="text-muted-foreground">
                 Informe a senha compartilhada para visualizar os projetos.
               </p>
-              <form className="space-y-3" onSubmit={handleSubmit}>
-                <Input
-                  type="password"
-                  value={password}
-                  onChange={(event) => setPassword(event.target.value)}
-                  placeholder="Senha de acesso"
-                  autoComplete="current-password"
-                  required
-                />
-                {error && <p className="text-sm text-destructive">{error}</p>}
+              <form className="space-y-3" onSubmit={handleSubmit} aria-label="Formulário de acesso">
+                <div className="space-y-2">
+                  <Label htmlFor="access-password">Senha de acesso</Label>
+                  <Input
+                    id="access-password"
+                    type="password"
+                    value={password}
+                    onChange={(event) => setPassword(event.target.value)}
+                    autoComplete="current-password"
+                    aria-invalid={!!error}
+                    aria-describedby={error ? "access-error" : undefined}
+                    required
+                  />
+                </div>
+                {error && (
+                  <p id="access-error" role="alert" className="text-sm text-destructive">
+                    {error}
+                  </p>
+                )}
                 <Button type="submit" className="w-full" disabled={isSubmitting}>
                   {isSubmitting ? "Validando..." : "Entrar"}
                 </Button>

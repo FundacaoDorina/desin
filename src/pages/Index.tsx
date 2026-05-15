@@ -32,6 +32,7 @@ function renderInlineFormatting(text: string) {
           className="underline underline-offset-2 hover:opacity-80"
         >
           {label}
+          <span className="sr-only"> (abre em nova aba)</span>
         </a>
       );
     }
@@ -169,22 +170,24 @@ const Index = ({ onLogout }: IndexProps) => {
       <main id="conteudo-principal" className="bg-card mx-4 my-6 md:mx-8 md:my-8 lg:mx-12 lg:my-10 p-3 md:p-5 lg:p-7 xl:p-10 min-h-[80vh]">
         {isLoading ? (
           <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4" role="status" aria-live="polite">
-            <Loader2 className="w-10 h-10 animate-spin text-muted-foreground" />
+            <Loader2 className="w-10 h-10 animate-spin text-muted-foreground" aria-hidden="true" />
             <p className="text-muted-foreground font-bebas text-xl">Carregando projetos...</p>
           </div>
         ) : (
           <>
             {isError && (
               <div className="flex items-center gap-2 mb-4 px-4 py-3 rounded bg-warning/20 text-warning-foreground border border-warning/30" role="alert">
-                <AlertTriangle className="w-5 h-5 flex-shrink-0" />
+                <AlertTriangle className="w-5 h-5 flex-shrink-0" aria-hidden="true" />
                 <span className="font-bebas text-lg">
                   Não foi possível carregar da planilha. Exibindo dados locais.
                 </span>
                 <button
+                  type="button"
                   onClick={() => refetch()}
+                  aria-label="Tentar carregar novamente da planilha"
                   className="ml-auto flex items-center gap-1 px-3 py-1 rounded bg-warning/30 hover:bg-warning/50 transition-colors"
                 >
-                  <RefreshCw className="w-4 h-4" />
+                  <RefreshCw className="w-4 h-4" aria-hidden="true" />
                   <span className="font-bebas text-sm">Tentar novamente</span>
                 </button>
               </div>
@@ -260,7 +263,7 @@ const Index = ({ onLogout }: IndexProps) => {
             title="Atualizar dados"
             aria-label="Atualizar dados sincronizados"
           >
-            <RefreshCw className="w-3 h-3" />
+            <RefreshCw className="w-3 h-3" aria-hidden="true" />
           </button>
         </footer>
       )}

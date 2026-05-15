@@ -38,7 +38,7 @@ const ScriptsDetail = ({ scripts }: ScriptsDetailProps) => {
       </div>
 
       <div className="grid gap-4 md:gap-6 lg:gap-8 md:grid-cols-[280px_1fr]">
-        <aside className="bg-sidebar-light rounded p-3" aria-label="Navegação de scripts">
+        <nav className="bg-sidebar-light rounded p-3" aria-label="Navegação de scripts">
           <h3 className="font-bebas font-bold text-card-foreground text-2xl mb-3">Lista</h3>
           <div className="space-y-2">
             {scripts.map((script) => (
@@ -47,7 +47,7 @@ const ScriptsDetail = ({ scripts }: ScriptsDetailProps) => {
                 type="button"
                 onClick={() => setSelectedScriptId(script.id)}
                 aria-current={selectedScript.id === script.id ? "page" : undefined}
-                className={`w-full text-left rounded px-3 py-2 font-bebas font-bold text-xl transition-colors ${
+                className={`w-full text-left rounded px-3 py-2 font-bebas font-bold text-xl transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
                   selectedScript.id === script.id
                     ? "bg-primary text-primary-foreground"
                     : "hover:bg-primary hover:text-primary-foreground text-card-foreground"
@@ -57,7 +57,7 @@ const ScriptsDetail = ({ scripts }: ScriptsDetailProps) => {
               </button>
             ))}
           </div>
-        </aside>
+        </nav>
 
         <section className="space-y-4 md:space-y-5">
           <div className="flex items-center gap-3">
@@ -69,9 +69,10 @@ const ScriptsDetail = ({ scripts }: ScriptsDetailProps) => {
                 href={selectedScript.link}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={`Abrir referência de ${selectedScript.name} (abre em nova aba)`}
                 className="inline-flex items-center gap-1 rounded px-3 py-1 bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
               >
-                <ExternalLink className="w-4 h-4" />
+                <ExternalLink className="w-4 h-4" aria-hidden="true" />
                 <span className="font-bebas text-lg">Abrir referência</span>
               </a>
             )}
