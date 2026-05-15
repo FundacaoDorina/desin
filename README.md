@@ -44,13 +44,24 @@ Este projeto foi construído com:
 - `src/data/` - Dados dos projetos (JSON)
 - `src/types/` - Definições de tipos TypeScript
 
-## Sincronização via Google Sheets
+## Controle de acesso + sincronização segura
 
-O app pode carregar conteúdo da planilha em vez do JSON local.
+O acesso à interface é protegido por senha compartilhada e os dados da planilha são lidos por funções serverless em `api/`, sem expor o Google Sheets no frontend.
 
-- `VITE_GOOGLE_SHEETS_ID`: ID da planilha (publicada ou compartilhada publicamente)
-- `VITE_GOOGLE_SHEETS_SCRIPTS_GID`: obrigatório quando `VITE_GOOGLE_SHEETS_ID` for de publicação (`2PACX-...`) para buscar a aba de scripts
-- `VITE_GOOGLE_SHEETS_DOCS_GID`: obrigatório quando `VITE_GOOGLE_SHEETS_ID` for de publicação (`2PACX-...`) para buscar a aba de documentação por projeto
+### Variáveis de ambiente
+
+- `ACCESS_PASSWORD`: senha compartilhada usada na tela de acesso
+- `ACCESS_TOKEN_SECRET`: segredo para assinar o token de sessão
+- `GOOGLE_SERVICE_ACCOUNT_EMAIL`: email da Service Account com acesso de leitura
+- `GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY`: chave privada da Service Account (com `\\n` no lugar de quebras de linha)
+- `GOOGLE_SHEETS_ID`: ID da planilha privada
+
+### Configuração da planilha privada
+
+1. Crie uma Service Account no Google Cloud com API Google Sheets habilitada.
+2. Compartilhe a planilha com o email da Service Account como visualizador.
+3. Configure as variáveis acima no ambiente da Vercel.
+4. Remova qualquer publicação da planilha na web e desative compartilhamento público por link.
 
 ### Aba de projetos (`roadmap`)
 

@@ -120,7 +120,11 @@ function renderDocumentationBlocks(documentation: string) {
   });
 }
 
-const Index = () => {
+interface IndexProps {
+  onLogout: () => void;
+}
+
+const Index = ({ onLogout }: IndexProps) => {
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   const [isDocumentationOpen, setIsDocumentationOpen] = useState(false);
 
@@ -161,7 +165,7 @@ const Index = () => {
       >
         Pular para o conteúdo principal
       </a>
-      <Header />
+      <Header onLogout={onLogout} />
       <main id="conteudo-principal" className="bg-card mx-4 my-6 md:mx-8 md:my-8 lg:mx-12 lg:my-10 p-3 md:p-5 lg:p-7 xl:p-10 min-h-[80vh]">
         {isLoading ? (
           <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4" role="status" aria-live="polite">

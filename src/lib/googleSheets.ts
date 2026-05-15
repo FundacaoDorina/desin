@@ -1,9 +1,6 @@
 import type { Project, TimelineYear, TimelineItemColor } from "@/types/project";
 import type { ScriptItem } from "@/types/script";
 
-/**
- * Mapeia os valores amigáveis da planilha para os códigos de cor do sistema.
- */
 function mapColorValue(value: string): TimelineItemColor {
   const normalized = value?.toString().toLowerCase().trim();
   switch (normalized) {
@@ -21,9 +18,6 @@ function mapColorValue(value: string): TimelineItemColor {
   }
 }
 
-/**
- * Parser simples de CSV que lida com campos entre aspas e quebras de linha.
- */
 function parseCSV(text: string): string[][] {
   const rows: string[][] = [];
   let current = "";
@@ -37,7 +31,7 @@ function parseCSV(text: string): string[][] {
     if (inQuotes) {
       if (char === '"' && next === '"') {
         current += '"';
-        i++; // pula a próxima aspas
+        i++;
       } else if (char === '"') {
         inQuotes = false;
       } else {
@@ -54,7 +48,7 @@ function parseCSV(text: string): string[][] {
         current = "";
         if (row.length > 1 || row[0] !== "") rows.push(row);
         row = [];
-        i++; // pula \n
+        i++;
       } else if (char === "\n") {
         row.push(current.trim());
         current = "";
@@ -66,25 +60,12 @@ function parseCSV(text: string): string[][] {
     }
   }
 
-  // última célula/row
   row.push(current.trim());
   if (row.length > 1 || row[0] !== "") rows.push(row);
 
   return rows;
 }
 
-/**
- * Transforma linhas do CSV em Project[].
- *
- * Colunas esperadas:
- *   0: project_id
- *   1: project_name
- *   2: status
- *   3: next_step
- *   4: year
- *   5: item
- *   6: item_status ("Concluído", "Em andamento", "Planejado")
- */
 function rowsToProjects(rows: string[][]): Project[] {
   const header = rows[0] ?? [];
   const dataRows = rows.slice(1);
@@ -179,22 +160,12 @@ function rowsToProjects(rows: string[][]): Project[] {
   return projects;
 }
 
-/**
- * Busca os dados dos projetos a partir de uma planilha do Google Sheets publicada.
- *
- * Aceita dois formatos de ID:
- *   - ID de publicação (começa com "2PACX-"): usa o endpoint /pub?output=csv
- *   - ID original da planilha: usa o endpoint /gviz/tq
- */
-export async function fetchProjectsFromSheets(
-  sheetId: string
-): Promise<Project[]> {
+export async function fetchProjectsFromSheets(sheetId: string): Promise<Project[]> {
   const isPublishedId = sheetId.startsWith("2PACX-");
 
   let csvText: string;
 
   if (isPublishedId) {
-    // Endpoint de planilha publicada (Arquivo > Compartilhar > Publicar na Web)
     const url = `https://docs.google.com/spreadsheets/d/e/${sheetId}/pub?output=csv&gid=0`;
     const response = await fetch(url);
     if (!response.ok) {
@@ -202,7 +173,6 @@ export async function fetchProjectsFromSheets(
     }
     csvText = await response.text();
   } else {
-    // Endpoint gviz para planilhas compartilhadas publicamente
     const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=roadmap`;
     const response = await fetch(url);
     if (!response.ok) {
@@ -213,7 +183,6 @@ export async function fetchProjectsFromSheets(
     csvText = await response.text();
   }
 
-  // Verifica se recebeu HTML (página de login do Google) ao invés de CSV
   if (csvText.trim().startsWith("<!DOCTYPE") || csvText.trim().startsWith("<html")) {
     throw new Error(
       "A planilha não está acessível publicamente. Publique-a em: Arquivo > Compartilhar > Publicar na Web."
