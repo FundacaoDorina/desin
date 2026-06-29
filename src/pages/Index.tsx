@@ -130,11 +130,24 @@ const Index = ({ onLogout }: IndexProps) => {
   const [isDocumentationOpen, setIsDocumentationOpen] = useState(false);
 
   const { projects, isLoading, isError, isFromSheet, refetch } = useProjects();
-  const { scripts } = useScripts();
+  const {
+    scripts,
+    isLoading: isScriptsLoading,
+    isError: isScriptsError,
+    isConfigured: isScriptsConfigured,
+    refetch: refetchScripts,
+  } = useScripts();
   const { projectDocs } = useProjectDocs();
   const hasScriptsProject = projects.some((project) => project.kind === "scripts");
   const projectsWithScripts = useMemo(() => {
-    if (hasScriptsProject || scripts.length === 0) return projects;
+    const shouldShowScriptsEntry =
+      hasScriptsProject ||
+      scripts.length > 0 ||
+      (isScriptsConfigured && (isScriptsLoading || !isScriptsError));
+
+    if (!shouldShowScriptsEntry) return projects;
+
+    if (hasScriptsProject) return projects;
 
     return [
       ...projects,
@@ -147,7 +160,7 @@ const Index = ({ onLogout }: IndexProps) => {
         timeline: [],
       },
     ];
-  }, [hasScriptsProject, projects, scripts.length]);
+  }, [hasScriptsProject, isScriptsConfigured, isScriptsError, isScriptsLoading, projects, scripts.length]);
   const selectedProject = projectsWithScripts.find((p) => p.id === selectedProjectId);
   const isScriptsProject = selectedProject?.kind === "scripts" || selectedProjectId === SCRIPTS_VIRTUAL_PROJECT_ID;
   const selectedDocumentation =
@@ -212,7 +225,38 @@ const Index = ({ onLogout }: IndexProps) => {
                   </aside>
                   <div className="flex-1">
                     {isScriptsProject ? (
-                      <ScriptsDetail scripts={scripts} />
+                      isScriptsLoading ? (
+                        <div className="flex flex-col items-center justify-center min-h-[40vh] gap-4">
+                          <Loader2 className="w-10 h-10 animate-spin text-muted-foreground" />
+                          <p className="text-muted-foreground font-bebas text-xl">Carregando scripts...</p>
+                        </div>
+                      ) : isScriptsError ? (
+                        <div className="space-y-6">
+                          <div className="bg-primary inline-block px-6 py-3 md:px-8 md:py-4 lg:px-10 lg:py-5">
+                            <h2 className="text-primary-foreground font-bebas font-bold text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
+                              Scripts
+                            </h2>
+                          </div>
+                          <div className="flex items-center gap-2 px-4 py-3 rounded bg-warning/20 text-warning-foreground border border-warning/30">
+                            <AlertTriangle className="w-5 h-5 flex-shrink-0" />
+                            <span className="font-bebas text-lg">
+                              Não foi possível carregar os scripts da planilha.
+                              {isScriptsConfigured && !import.meta.env.VITE_GOOGLE_SHEETS_SCRIPTS_GID
+                                ? " Configure VITE_GOOGLE_SHEETS_SCRIPTS_GID no ambiente de deploy."
+                                : ""}
+                            </span>
+                            <button
+                              onClick={() => refetchScripts()}
+                              className="ml-auto flex items-center gap-1 px-3 py-1 rounded bg-warning/30 hover:bg-warning/50 transition-colors"
+                            >
+                              <RefreshCw className="w-4 h-4" />
+                              <span className="font-bebas text-sm">Tentar novamente</span>
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        <ScriptsDetail scripts={scripts} />
+                      )
                     ) : (
                       <ProjectDetail
                         name={selectedProject.name}

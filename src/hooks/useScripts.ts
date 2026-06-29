@@ -16,7 +16,8 @@ export function useScripts() {
     refetchOnWindowFocus: true,
   });
 
-  const scripts: ScriptItem[] = data ?? (scriptsData as ScriptItem[]);
+  const scripts: ScriptItem[] =
+    data ?? (!SHEETS_ID ? (scriptsData as ScriptItem[]) : []);
 
   return {
     scripts,
@@ -24,6 +25,7 @@ export function useScripts() {
     isError,
     error,
     isFromSheet: !!data,
+    isConfigured: !!SHEETS_ID,
     refetch,
   };
 }
