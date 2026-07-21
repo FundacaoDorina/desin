@@ -1,7 +1,7 @@
 import { extractBearerToken, verifyAccessToken } from "./_lib/auth";
 import { createHeaderMap, getCellByHeader, getSheetRows } from "./_lib/sheets";
 
-type TimelineItemColor = "success" | "warning" | "muted";
+type TimelineItemColor = "success" | "warning" | "muted" | "suspended" | "closed";
 interface ApiRequest {
   method?: string;
   headers?: Record<string, string | string[] | undefined>;
@@ -13,15 +13,27 @@ interface ApiResponse {
 }
 
 function mapColorValue(value: string): TimelineItemColor {
-  const normalized = value?.toString().toLowerCase().trim();
+  const normalized = value
+    ?.toString()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim();
   switch (normalized) {
-    case "concluído":
     case "concluido":
     case "done":
       return "success";
     case "em andamento":
     case "in progress":
       return "warning";
+    case "suspenso":
+    case "suspensa":
+    case "suspended":
+      return "suspended";
+    case "encerrado":
+    case "encerrada":
+    case "closed":
+      return "closed";
     default:
       return "muted";
   }

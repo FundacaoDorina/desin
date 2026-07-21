@@ -18,12 +18,21 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(hasAccessToken());
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [pageAnnouncement, setPageAnnouncement] = useState("");
+
+  const announcePageChange = (message: string) => {
+    setPageAnnouncement("");
+    window.setTimeout(() => {
+      setPageAnnouncement(message);
+    }, 50);
+  };
 
   const handleLogout = () => {
     clearAccessToken();
     queryClient.clear();
     setIsAuthenticated(false);
     setPassword("");
+    announcePageChange("Você saiu. Página de acesso restrito exibida.");
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -58,6 +67,7 @@ const App = () => {
       setIsAuthenticated(true);
       setPassword("");
       queryClient.clear();
+      announcePageChange("Acesso concedido. Página de projetos exibida.");
     } catch (submitError) {
       setError(submitError instanceof Error ? submitError.message : "Falha ao validar acesso.");
     } finally {
@@ -65,12 +75,16 @@ const App = () => {
     }
   };
 
-  if (!isAuthenticated) {
-    return (
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+          {pageAnnouncement}
+        </div>
+
+        {!isAuthenticated ? (
           <main className="min-h-screen bg-background flex items-center justify-center p-6">
             <section className="w-full max-w-md bg-card rounded-lg border border-border p-6 space-y-4">
               <h1 className="font-bebas text-4xl text-card-foreground">Acesso restrito</h1>
@@ -102,22 +116,14 @@ const App = () => {
               </form>
             </section>
           </main>
-        </TooltipProvider>
-      </QueryClientProvider>
-    );
-  }
-
-  return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index onLogout={handleLogout} />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+        ) : (
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Index onLogout={handleLogout} />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        )}
       </TooltipProvider>
     </QueryClientProvider>
   );

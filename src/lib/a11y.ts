@@ -6,6 +6,10 @@ export function getTimelineStatusLabel(color: TimelineItemColor): string {
       return "Concluído";
     case "warning":
       return "Em andamento";
+    case "suspended":
+      return "Suspenso";
+    case "closed":
+      return "Encerrado";
     case "muted":
       return "Pendente";
     default:

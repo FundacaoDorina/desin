@@ -1,4 +1,4 @@
-export type TimelineItemColor = "success" | "warning" | "muted";
+export type TimelineItemColor = "success" | "warning" | "muted" | "suspended" | "closed";
 
 export interface TimelineItem {
   text: string;

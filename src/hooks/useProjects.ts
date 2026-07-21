@@ -16,7 +16,7 @@ export function useProjects() {
     queryKey: ["projects", SHEETS_ID],
     queryFn: () => fetchProjectsFromSheets(SHEETS_ID!),
     enabled: !!SHEETS_ID,
-    staleTime: 5 * 60 * 1000, // Cache de 5 minutos
+    staleTime: 60 * 1000, // Cache de 1 minuto
     retry: 2,
     refetchOnWindowFocus: true, // Atualiza ao voltar para a aba
   });

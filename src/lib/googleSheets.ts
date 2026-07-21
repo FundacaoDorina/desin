@@ -2,15 +2,27 @@ import type { Project, TimelineYear, TimelineItemColor } from "@/types/project";
 import type { ScriptItem } from "@/types/script";
 
 function mapColorValue(value: string): TimelineItemColor {
-  const normalized = value?.toString().toLowerCase().trim();
+  const normalized = value
+    ?.toString()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim();
   switch (normalized) {
-    case "concluído":
     case "concluido":
     case "done":
       return "success";
     case "em andamento":
     case "in progress":
       return "warning";
+    case "suspenso":
+    case "suspensa":
+    case "suspended":
+      return "suspended";
+    case "encerrado":
+    case "encerrada":
+    case "closed":
+      return "closed";
     case "planejado":
     case "planned":
     default:
@@ -165,15 +177,17 @@ export async function fetchProjectsFromSheets(sheetId: string): Promise<Project[
 
   let csvText: string;
 
+  const cacheBust = Date.now();
+
   if (isPublishedId) {
-    const url = `https://docs.google.com/spreadsheets/d/e/${sheetId}/pub?output=csv&gid=0`;
+    const url = `https://docs.google.com/spreadsheets/d/e/${sheetId}/pub?output=csv&gid=0&_=${cacheBust}`;
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`Falha ao buscar planilha publicada: ${response.status}`);
     }
     csvText = await response.text();
   } else {
-    const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=roadmap`;
+    const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=roadmap&_=${cacheBust}`;
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(

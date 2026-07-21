@@ -69,11 +69,13 @@ Colunas esperadas:
 
 - `project_id`
 - `project_name`
-- `status`
+- `status` (texto livre; use `Encerrado` ou `Suspenso` para marcar o projeto como finalizado)
 - `next_step`
 - `year`
 - `item`
-- `item_status` (`Concluído`, `Em andamento`, `Planejado`)
+- `item_status` (`Concluído`, `Em andamento`, `Planejado`, `Suspenso`, `Encerrado`)
+
+Quando o `status` do projeto ou qualquer `item_status` for `Encerrado`/`Suspenso`, o progresso exibe 100% e o status mostrado fica Encerrado ou Suspenso, mesmo com itens pendentes.
 - `documentation_content` (opcional, fallback de texto simples no próprio roadmap)
 - `kind` (opcional, usar `scripts` para o item especial de scripts)
 

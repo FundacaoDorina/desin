@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+
 import Header from "@/components/Header";
 import ProjectList from "@/components/ProjectList";
 import ProjectDetail from "@/components/ProjectDetail";
@@ -7,6 +8,7 @@ import Timeline from "@/components/Timeline";
 import { useProjects } from "@/hooks/useProjects";
 import { useScripts } from "@/hooks/useScripts";
 import { useProjectDocs } from "@/hooks/useProjectDocs";
+import { getProjectDisplayStatus } from "@/lib/projectProgress";
 import { Loader2, AlertTriangle, RefreshCw } from "lucide-react";
 
 const DOC_TITLE_PREFIX = "[[DOC_TITLE]]";
@@ -128,6 +130,7 @@ interface IndexProps {
 const Index = ({ onLogout }: IndexProps) => {
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   const [isDocumentationOpen, setIsDocumentationOpen] = useState(false);
+  const [pageAnnouncement, setPageAnnouncement] = useState("");
 
   const { projects, isLoading, isError, isFromSheet, refetch } = useProjects();
   const {
@@ -167,8 +170,17 @@ const Index = ({ onLogout }: IndexProps) => {
     selectedProject ? projectDocs[selectedProject.id] ?? selectedProject.documentationContent : "";
 
   const handleSelectProject = (id: string) => {
+    const project = projectsWithScripts.find((p) => p.id === id);
     setSelectedProjectId(id);
     setIsDocumentationOpen(false);
+
+    if (project) {
+      // Limpa e redefine para o leitor de tela anunciar mesmo em trocas rápidas
+      setPageAnnouncement("");
+      window.setTimeout(() => {
+        setPageAnnouncement(`Projeto ${project.name} exibido`);
+      }, 50);
+    }
   };
 
   return (
@@ -179,6 +191,9 @@ const Index = ({ onLogout }: IndexProps) => {
       >
         Pular para o conteúdo principal
       </a>
+      <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+        {pageAnnouncement}
+      </div>
       <Header onLogout={onLogout} />
       <main id="conteudo-principal" className="bg-card mx-4 my-6 md:mx-8 md:my-8 lg:mx-12 lg:my-10 p-3 md:p-5 lg:p-7 xl:p-10 min-h-[80vh]">
         {isLoading ? (
@@ -260,7 +275,7 @@ const Index = ({ onLogout }: IndexProps) => {
                     ) : (
                       <ProjectDetail
                         name={selectedProject.name}
-                        status={selectedProject.status}
+                        status={getProjectDisplayStatus(selectedProject)}
                         nextStep={selectedProject.nextStep}
                         documentationContent={selectedDocumentation}
                         isDocumentationOpen={isDocumentationOpen}

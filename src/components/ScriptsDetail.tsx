@@ -8,11 +8,24 @@ interface ScriptsDetailProps {
 
 const ScriptsDetail = ({ scripts }: ScriptsDetailProps) => {
   const [selectedScriptId, setSelectedScriptId] = useState<string | null>(scripts[0]?.id ?? null);
+  const [pageAnnouncement, setPageAnnouncement] = useState("");
 
   const selectedScript = useMemo(
     () => scripts.find((script) => script.id === selectedScriptId) ?? scripts[0],
     [scripts, selectedScriptId]
   );
+
+  const handleSelectScript = (id: string) => {
+    const script = scripts.find((item) => item.id === id);
+    setSelectedScriptId(id);
+
+    if (script) {
+      setPageAnnouncement("");
+      window.setTimeout(() => {
+        setPageAnnouncement(`Script ${script.name} exibido`);
+      }, 50);
+    }
+  };
 
   if (!selectedScript) {
     return (
@@ -31,6 +44,9 @@ const ScriptsDetail = ({ scripts }: ScriptsDetailProps) => {
 
   return (
     <div className="space-y-6 md:space-y-8 lg:space-y-10">
+      <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+        {pageAnnouncement}
+      </div>
       <div className="bg-primary inline-block px-6 py-3 md:px-8 md:py-4 lg:px-10 lg:py-5">
         <h2 className="text-primary-foreground font-bebas font-bold text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
           Scripts
@@ -45,7 +61,7 @@ const ScriptsDetail = ({ scripts }: ScriptsDetailProps) => {
               <button
                 key={script.id}
                 type="button"
-                onClick={() => setSelectedScriptId(script.id)}
+                onClick={() => handleSelectScript(script.id)}
                 aria-current={selectedScript.id === script.id ? "page" : undefined}
                 className={`w-full text-left rounded px-3 py-2 font-bebas font-bold text-xl transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
                   selectedScript.id === script.id
