@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import Header from "@/components/Header";
 import ProjectList from "@/components/ProjectList";
@@ -183,6 +183,19 @@ const Index = ({ onLogout }: IndexProps) => {
     }
   };
 
+  // Após trocar de view, move o foco para o título do projeto.
+  // Sem isso, o elemento focado some do DOM e o leitor cai no <html>.
+  useEffect(() => {
+    if (!selectedProjectId) return;
+    if (isScriptsProject && isScriptsLoading) return;
+
+    const timeoutId = window.setTimeout(() => {
+      document.getElementById("titulo-projeto")?.focus();
+    }, 0);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [selectedProjectId, isScriptsProject, isScriptsLoading]);
+
   return (
     <div className="min-h-screen bg-background">
       <a
@@ -248,7 +261,11 @@ const Index = ({ onLogout }: IndexProps) => {
                       ) : isScriptsError ? (
                         <div className="space-y-6">
                           <div className="bg-primary inline-block px-6 py-3 md:px-8 md:py-4 lg:px-10 lg:py-5">
-                            <h2 className="text-primary-foreground font-bebas font-bold text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
+                            <h2
+                              id="titulo-projeto"
+                              tabIndex={-1}
+                              className="text-primary-foreground font-bebas font-bold text-5xl md:text-6xl lg:text-7xl xl:text-8xl rounded outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                            >
                               Scripts
                             </h2>
                           </div>
