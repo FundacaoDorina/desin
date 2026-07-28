@@ -31,7 +31,11 @@ const ScriptsDetail = ({ scripts }: ScriptsDetailProps) => {
     return (
       <div className="space-y-6">
         <div className="bg-primary inline-block px-6 py-3 md:px-8 md:py-4 lg:px-10 lg:py-5">
-          <h2 className="text-primary-foreground font-bebas font-bold text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
+          <h2
+            id="titulo-projeto"
+            tabIndex={-1}
+            className="text-primary-foreground font-bebas font-bold text-5xl md:text-6xl lg:text-7xl xl:text-8xl rounded outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          >
             Scripts
           </h2>
         </div>
@@ -48,7 +52,11 @@ const ScriptsDetail = ({ scripts }: ScriptsDetailProps) => {
         {pageAnnouncement}
       </div>
       <div className="bg-primary inline-block px-6 py-3 md:px-8 md:py-4 lg:px-10 lg:py-5">
-        <h2 className="text-primary-foreground font-bebas font-bold text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
+        <h2
+          id="titulo-projeto"
+          tabIndex={-1}
+          className="text-primary-foreground font-bebas font-bold text-5xl md:text-6xl lg:text-7xl xl:text-8xl rounded outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        >
           Scripts
         </h2>
       </div>

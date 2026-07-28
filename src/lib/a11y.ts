@@ -1,18 +1,36 @@
 import type { TimelineItemColor } from "@/types/project";
 
-export function getTimelineStatusLabel(color: TimelineItemColor): string {
+export function getTimelineColorName(color: TimelineItemColor): string {
   switch (color) {
     case "success":
-      return "Concluído";
+      return "Verde";
     case "warning":
-      return "Em andamento";
+      return "Amarelo";
     case "suspended":
-      return "Suspenso";
     case "closed":
-      return "Encerrado";
+      return "Cinza";
     case "muted":
-      return "Pendente";
+      return "Cinza claro";
     default:
-      return "Pendente";
+      return "Cinza claro";
+  }
+}
+
+export function getTimelineStatusLabel(color: TimelineItemColor): string {
+  const colorName = getTimelineColorName(color);
+
+  switch (color) {
+    case "success":
+      return `${colorName} — Concluído`;
+    case "warning":
+      return `${colorName} — Em andamento`;
+    case "suspended":
+      return `${colorName} — Suspenso`;
+    case "closed":
+      return `${colorName} — Encerrado`;
+    case "muted":
+      return `${colorName} — Pendente`;
+    default:
+      return `${colorName} — Pendente`;
   }
 }
