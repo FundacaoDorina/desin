@@ -100,3 +100,21 @@ Colunas esperadas:
 - `how_it_works`
 - `usage`
 - `link` (opcional)
+
+### Aba de testes em beta (`testes_beta`)
+
+Usada na área **testes em beta** da Plataforma Braille. Pode ser a mesma tabela já usada hoje; a primeira linha deve ser o cabeçalho.
+
+Colunas esperadas (os nomes da planilha atual também são aceitos):
+
+- `CORREÇÃO` (ou `correcao`)
+- `STATUS` (`Não iniciado`, `Em correção`, `Finalizado`)
+- `PRIORIDADE (1>5)` (ou `prioridade`, número de 1 a 5)
+- `EM BETA` (`SIM` / `NÃO`)
+- `DIFICULDADE` (recomendado, porque a cor da célula não vem no CSV): `fácil` / `verde`, `médio` / `amarelo`, `médio difícil` / `amarelo escuro`, `difícil` / `vermelho`. Também aceita o formato combinado da planilha, como `fácil/verde`.
+- `project_id` (opcional; padrão `plataforma-braille`)
+- `id` (opcional)
+
+A cor da coluna Correção no site segue a dificuldade. Sem a coluna `DIFICULDADE`, status, prioridade e em beta continuam sincronizados; a escala de dificuldade usa o JSON local até essa coluna existir.
+
+No deploy com planilha publicada, configure `VITE_GOOGLE_SHEETS_BETA_GID` com o gid da aba `testes_beta`.

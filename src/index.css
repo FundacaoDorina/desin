@@ -38,6 +38,27 @@ All colors MUST be HSL.
     --sidebar-light: 0 0% 90%;
     --sidebar-dark: 0 0% 64%;
 
+    --beta-easy: 120 100% 40%;
+    --beta-easy-foreground: 0 0% 0%;
+    --beta-medium: 51 100% 55%;
+    --beta-medium-foreground: 0 0% 0%;
+    --beta-medium-hard: 36 100% 42%;
+    --beta-medium-hard-foreground: 0 0% 0%;
+    --beta-hard: 0 85% 48%;
+    --beta-hard-foreground: 0 0% 100%;
+    --beta-finished: 0 0% 82%;
+    --beta-finished-foreground: 0 0% 16%;
+    --beta-status-todo: 0 0% 90%;
+    --beta-status-todo-foreground: 0 0% 16%;
+    --beta-status-progress: 207 80% 88%;
+    --beta-status-progress-foreground: 207 70% 28%;
+    --beta-status-done: 137 45% 32%;
+    --beta-status-done-foreground: 0 0% 100%;
+    --beta-flag-no: 0 80% 32%;
+    --beta-flag-no-foreground: 0 0% 100%;
+    --beta-flag-yes: 120 100% 40%;
+    --beta-flag-yes-foreground: 0 0% 0%;
+
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
@@ -94,6 +115,27 @@ All colors MUST be HSL.
 
     --sidebar-light: 0 0% 90%;
     --sidebar-dark: 0 0% 64%;
+
+    --beta-easy: 120 100% 40%;
+    --beta-easy-foreground: 0 0% 0%;
+    --beta-medium: 51 100% 55%;
+    --beta-medium-foreground: 0 0% 0%;
+    --beta-medium-hard: 36 100% 42%;
+    --beta-medium-hard-foreground: 0 0% 0%;
+    --beta-hard: 0 85% 48%;
+    --beta-hard-foreground: 0 0% 100%;
+    --beta-finished: 0 0% 82%;
+    --beta-finished-foreground: 0 0% 16%;
+    --beta-status-todo: 0 0% 90%;
+    --beta-status-todo-foreground: 0 0% 16%;
+    --beta-status-progress: 207 80% 88%;
+    --beta-status-progress-foreground: 207 70% 28%;
+    --beta-status-done: 137 45% 32%;
+    --beta-status-done-foreground: 0 0% 100%;
+    --beta-flag-no: 0 80% 32%;
+    --beta-flag-no-foreground: 0 0% 100%;
+    --beta-flag-yes: 120 100% 40%;
+    --beta-flag-yes-foreground: 0 0% 0%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 100%;

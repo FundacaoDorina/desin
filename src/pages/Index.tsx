@@ -1,13 +1,15 @@
-import { useEffect, useMemo, useState } from "react";
+import { useLayoutEffect, useMemo, useRef, useState } from "react";
 
 import Header from "@/components/Header";
 import ProjectList from "@/components/ProjectList";
 import ProjectDetail from "@/components/ProjectDetail";
 import ScriptsDetail from "@/components/ScriptsDetail";
 import Timeline from "@/components/Timeline";
+import BetaTestsView from "@/components/BetaTestsView";
 import { useProjects } from "@/hooks/useProjects";
 import { useScripts } from "@/hooks/useScripts";
 import { useProjectDocs } from "@/hooks/useProjectDocs";
+import { useBetaTests } from "@/hooks/useBetaTests";
 import { getProjectDisplayStatus } from "@/lib/projectProgress";
 import { Loader2, AlertTriangle, RefreshCw } from "lucide-react";
 
@@ -130,7 +132,9 @@ interface IndexProps {
 const Index = ({ onLogout }: IndexProps) => {
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   const [isDocumentationOpen, setIsDocumentationOpen] = useState(false);
+  const [isBetaTestsOpen, setIsBetaTestsOpen] = useState(false);
   const [pageAnnouncement, setPageAnnouncement] = useState("");
+  const betaTestsButtonRef = useRef<HTMLButtonElement>(null);
 
   const { projects, isLoading, isError, isFromSheet, refetch } = useProjects();
   const {
@@ -141,6 +145,13 @@ const Index = ({ onLogout }: IndexProps) => {
     refetch: refetchScripts,
   } = useScripts();
   const { projectDocs } = useProjectDocs();
+  const {
+    items: betaTests,
+    isLoading: isBetaTestsLoading,
+    isError: isBetaTestsError,
+    refetch: refetchBetaTests,
+    hasBetaTestsArea,
+  } = useBetaTests(selectedProjectId);
   const hasScriptsProject = projects.some((project) => project.kind === "scripts");
   const projectsWithScripts = useMemo(() => {
     const shouldShowScriptsEntry =
@@ -173,6 +184,7 @@ const Index = ({ onLogout }: IndexProps) => {
     const project = projectsWithScripts.find((p) => p.id === id);
     setSelectedProjectId(id);
     setIsDocumentationOpen(false);
+    setIsBetaTestsOpen(false);
 
     if (project) {
       // Limpa e redefine para o leitor de tela anunciar mesmo em trocas rápidas
@@ -183,17 +195,26 @@ const Index = ({ onLogout }: IndexProps) => {
     }
   };
 
-  // Após trocar de view, move o foco para o título do projeto.
-  // Sem isso, o elemento focado some do DOM e o leitor cai no <html>.
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!selectedProjectId) return;
     if (isScriptsProject && isScriptsLoading) return;
 
+    const resetScroll = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+
+    resetScroll();
+    const frame = window.requestAnimationFrame(resetScroll);
     const timeoutId = window.setTimeout(() => {
-      document.getElementById("titulo-projeto")?.focus();
+      document.getElementById("titulo-projeto")?.focus({ preventScroll: true });
     }, 0);
 
-    return () => window.clearTimeout(timeoutId);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.clearTimeout(timeoutId);
+    };
   }, [selectedProjectId, isScriptsProject, isScriptsLoading]);
 
   return (
@@ -251,7 +272,7 @@ const Index = ({ onLogout }: IndexProps) => {
                       minimized
                     />
                   </aside>
-                  <div className="flex-1">
+                  <div className="flex-1 min-w-0">
                     {isScriptsProject ? (
                       isScriptsLoading ? (
                         <div className="flex flex-col items-center justify-center min-h-[40vh] gap-4">
@@ -290,18 +311,52 @@ const Index = ({ onLogout }: IndexProps) => {
                         <ScriptsDetail scripts={scripts} />
                       )
                     ) : (
-                      <ProjectDetail
-                        name={selectedProject.name}
-                        status={getProjectDisplayStatus(selectedProject)}
-                        nextStep={selectedProject.nextStep}
-                        documentationContent={selectedDocumentation}
-                        isDocumentationOpen={isDocumentationOpen}
-                        onToggleDocumentation={() => setIsDocumentationOpen((prev) => !prev)}
-                      />
+                      <>
+                        <ProjectDetail
+                          name={selectedProject.name}
+                          status={getProjectDisplayStatus(selectedProject)}
+                          nextStep={selectedProject.nextStep}
+                          documentationContent={selectedDocumentation}
+                          isDocumentationOpen={isDocumentationOpen}
+                          onToggleDocumentation={() => {
+                            setIsBetaTestsOpen(false);
+                            setIsDocumentationOpen((prev) => !prev);
+                          }}
+                          hasBetaTestsArea={hasBetaTestsArea}
+                          isBetaTestsOpen={isBetaTestsOpen}
+                          betaTestsButtonRef={betaTestsButtonRef}
+                          onOpenBetaTests={() => {
+                            setIsDocumentationOpen(false);
+                            setIsBetaTestsOpen(true);
+                            setPageAnnouncement("");
+                            window.setTimeout(() => {
+                              setPageAnnouncement("Área testes em beta exibida");
+                            }, 50);
+                          }}
+                        />
+                        {isBetaTestsOpen && (
+                          <div id="testes-em-beta" className="mt-1">
+                            <BetaTestsView
+                              items={betaTests}
+                              isLoading={isBetaTestsLoading}
+                              isError={isBetaTestsError}
+                              onRetry={() => refetchBetaTests()}
+                              onBack={() => {
+                                setIsBetaTestsOpen(false);
+                                setPageAnnouncement("");
+                                window.setTimeout(() => {
+                                  setPageAnnouncement(`Projeto ${selectedProject.name} exibido`);
+                                  betaTestsButtonRef.current?.focus();
+                                }, 50);
+                              }}
+                            />
+                          </div>
+                        )}
+                      </>
                     )}
                   </div>
                 </div>
-                {!isScriptsProject && (
+                {!isScriptsProject && !isBetaTestsOpen && (
                   isDocumentationOpen ? (
                     <section id="project-documentation" className="bg-sidebar-light rounded p-4 md:p-6 lg:p-8 mt-6">
                       <h3 className="text-card-foreground font-bebas font-bold text-3xl md:text-4xl lg:text-5xl mb-3 md:mb-4">
@@ -334,7 +389,10 @@ const Index = ({ onLogout }: IndexProps) => {
           </span>
           <button
             type="button"
-            onClick={() => refetch()}
+            onClick={() => {
+              refetch();
+              refetchBetaTests();
+            }}
             className="flex items-center gap-1 px-2 py-1 rounded hover:text-white/70 transition-colors"
             title="Atualizar dados"
             aria-label="Atualizar dados sincronizados"

@@ -1,0 +1,146 @@
+[
+  {
+    "id": "pb-beta-1",
+    "projectId": "plataforma-braille",
+    "correcao": "Título 3 sendo exportado sem <r+>/<r->",
+    "dificuldade": "facil",
+    "status": "em-correcao",
+    "prioridade": 1,
+    "emBeta": "nao"
+  },
+  {
+    "id": "pb-beta-2",
+    "projectId": "plataforma-braille",
+    "correcao": "Identificação não está sendo exportada",
+    "dificuldade": "facil",
+    "status": "em-correcao",
+    "prioridade": 1,
+    "emBeta": "nao"
+  },
+  {
+    "id": "pb-beta-3",
+    "projectId": "plataforma-braille",
+    "correcao": "Remover linhas em branco entre alternativa na importação do json",
+    "dificuldade": "medio",
+    "status": "nao-iniciado",
+    "prioridade": 1,
+    "emBeta": "nao"
+  },
+  {
+    "id": "pb-beta-4",
+    "projectId": "plataforma-braille",
+    "correcao": "Corrigir bug ao apagar linhas entre itens marcados com recuo",
+    "dificuldade": "medio-dificil",
+    "status": "nao-iniciado",
+    "prioridade": 1,
+    "emBeta": "nao"
+  },
+  {
+    "id": "pb-beta-5",
+    "projectId": "plataforma-braille",
+    "correcao": "Adicionar ponto automaticamente após enunciados de questões",
+    "dificuldade": "medio-dificil",
+    "status": "nao-iniciado",
+    "prioridade": 1,
+    "emBeta": "nao"
+  },
+  {
+    "id": "pb-beta-6",
+    "projectId": "plataforma-braille",
+    "correcao": "Corrigir formatação dos quadros e tabelas (problema das letras maiúsculas)",
+    "dificuldade": "medio",
+    "status": "nao-iniciado",
+    "prioridade": 1,
+    "emBeta": "nao"
+  },
+  {
+    "id": "pb-beta-7",
+    "projectId": "plataforma-braille",
+    "correcao": "Remover <p> da exportação na linearização",
+    "dificuldade": "facil",
+    "status": "em-correcao",
+    "prioridade": 1,
+    "emBeta": "nao"
+  },
+  {
+    "id": "pb-beta-8",
+    "projectId": "plataforma-braille",
+    "correcao": "Ctrl z volta ao início do documento",
+    "dificuldade": null,
+    "status": "finalizado",
+    "prioridade": 1,
+    "emBeta": "sim"
+  },
+  {
+    "id": "pb-beta-9",
+    "projectId": "plataforma-braille",
+    "correcao": "Nas notas sobre acentos estrangeiros, as letras minúsculas isoladas devem ser grifadas (ex.: ?e = *e* com acento grave)",
+    "dificuldade": "facil",
+    "status": "em-correcao",
+    "prioridade": 1,
+    "emBeta": "nao"
+  },
+  {
+    "id": "pb-beta-10",
+    "projectId": "plataforma-braille",
+    "correcao": "Alterar a formatação do título 1 para ter traços em cima e embaixo",
+    "dificuldade": "facil",
+    "status": "nao-iniciado",
+    "prioridade": 1,
+    "emBeta": "nao"
+  },
+  {
+    "id": "pb-beta-11",
+    "projectId": "plataforma-braille",
+    "correcao": "Não é possível inserir nota de letra estrangeira em um trecho com recuo",
+    "dificuldade": "medio",
+    "status": "nao-iniciado",
+    "prioridade": 1,
+    "emBeta": "nao"
+  },
+  {
+    "id": "pb-beta-12",
+    "projectId": "plataforma-braille",
+    "correcao": "Remover formatação especial de todos os elementos especiais",
+    "dificuldade": null,
+    "status": "finalizado",
+    "prioridade": 1,
+    "emBeta": "sim"
+  },
+  {
+    "id": "pb-beta-13",
+    "projectId": "plataforma-braille",
+    "correcao": "Adicionar um espaço a partir do segundo item nas listas, alternativas, poemas, etc.",
+    "dificuldade": "medio",
+    "status": "em-correcao",
+    "prioridade": 1,
+    "emBeta": "nao"
+  },
+  {
+    "id": "pb-beta-14",
+    "projectId": "plataforma-braille",
+    "correcao": "As variantes tipográficas estão vindo com um espaço a menos dentro do comando",
+    "dificuldade": "facil",
+    "status": "em-correcao",
+    "prioridade": 1,
+    "emBeta": "nao"
+  },
+  {
+    "id": "pb-beta-15",
+    "projectId": "plataforma-braille",
+    "correcao": "Remover excesso de linhas em branco na exportação",
+    "dificuldade": null,
+    "status": "finalizado",
+    "prioridade": 1,
+    "emBeta": "sim"
+  },
+  {
+    "id": "pb-beta-16",
+    "projectId": "plataforma-braille",
+    "correcao": "Não deveria forçar quebra de linha quando aplicar lista tipo bullet.",
+    "dificuldade": "facil",
+    "status": "em-correcao",
+    "prioridade": 1,
+    "emBeta": "nao"
+  }
+]

@@ -1,5 +1,7 @@
 import type { Project, TimelineYear, TimelineItemColor } from "@/types/project";
 import type { ScriptItem } from "@/types/script";
+import { BETA_TESTS_SHEET_NAME, rowsToBetaTests } from "@/lib/betaTests";
+import type { BetaTestItem } from "@/types/betaTest";
 
 function mapColorValue(value: string): TimelineItemColor {
   const normalized = value
@@ -377,4 +379,47 @@ export async function fetchProjectDocsFromSheets(
   const rows = parseCSV(csvText);
   if (rows.length < 2) return {};
   return rowsToProjectDocsMap(rows);
+}
+
+export async function fetchBetaTestsFromSheets(
+  sheetId: string,
+  publishedBetaGid?: string
+): Promise<BetaTestItem[]> {
+  const isPublishedId = sheetId.startsWith("2PACX-");
+  let csvText: string;
+  const cacheBust = Date.now();
+
+  if (isPublishedId) {
+    const gid = publishedBetaGid?.trim();
+    if (!gid) {
+      throw new Error(
+        "Para planilha publicada, configure VITE_GOOGLE_SHEETS_BETA_GID com o gid da aba testes_beta."
+      );
+    }
+    const url = `https://docs.google.com/spreadsheets/d/e/${sheetId}/pub?output=csv&gid=${encodeURIComponent(gid)}&_=${cacheBust}`;
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Falha ao buscar testes em beta da planilha publicada: ${response.status}`);
+    }
+    csvText = await response.text();
+  } else {
+    const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(BETA_TESTS_SHEET_NAME)}&_=${cacheBust}`;
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(
+        `Falha ao buscar testes em beta da planilha: ${response.status}. Verifique se a aba testes_beta existe e está compartilhada.`
+      );
+    }
+    csvText = await response.text();
+  }
+
+  if (csvText.trim().startsWith("<!DOCTYPE") || csvText.trim().startsWith("<html")) {
+    throw new Error(
+      "A aba de testes em beta não está acessível publicamente. Publique a planilha para leitura."
+    );
+  }
+
+  const rows = parseCSV(csvText);
+  if (rows.length < 2) return [];
+  return rowsToBetaTests(rows);
 }

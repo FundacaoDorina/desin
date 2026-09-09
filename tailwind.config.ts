@@ -60,6 +60,46 @@ export default {
         },
         "sidebar-light": "hsl(var(--sidebar-light))",
         "sidebar-dark": "hsl(var(--sidebar-dark))",
+        "beta-easy": {
+          DEFAULT: "hsl(var(--beta-easy))",
+          foreground: "hsl(var(--beta-easy-foreground))",
+        },
+        "beta-medium": {
+          DEFAULT: "hsl(var(--beta-medium))",
+          foreground: "hsl(var(--beta-medium-foreground))",
+        },
+        "beta-medium-hard": {
+          DEFAULT: "hsl(var(--beta-medium-hard))",
+          foreground: "hsl(var(--beta-medium-hard-foreground))",
+        },
+        "beta-hard": {
+          DEFAULT: "hsl(var(--beta-hard))",
+          foreground: "hsl(var(--beta-hard-foreground))",
+        },
+        "beta-finished": {
+          DEFAULT: "hsl(var(--beta-finished))",
+          foreground: "hsl(var(--beta-finished-foreground))",
+        },
+        "beta-status-todo": {
+          DEFAULT: "hsl(var(--beta-status-todo))",
+          foreground: "hsl(var(--beta-status-todo-foreground))",
+        },
+        "beta-status-progress": {
+          DEFAULT: "hsl(var(--beta-status-progress))",
+          foreground: "hsl(var(--beta-status-progress-foreground))",
+        },
+        "beta-status-done": {
+          DEFAULT: "hsl(var(--beta-status-done))",
+          foreground: "hsl(var(--beta-status-done-foreground))",
+        },
+        "beta-flag-no": {
+          DEFAULT: "hsl(var(--beta-flag-no))",
+          foreground: "hsl(var(--beta-flag-no-foreground))",
+        },
+        "beta-flag-yes": {
+          DEFAULT: "hsl(var(--beta-flag-yes))",
+          foreground: "hsl(var(--beta-flag-yes-foreground))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
