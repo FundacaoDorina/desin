@@ -2,6 +2,8 @@ import type { BetaDifficulty, BetaFlag, BetaStatus, BetaTestItem } from "@/types
 
 export const BETA_TESTS_PROJECT_ID = "plataforma-braille";
 export const BETA_TESTS_SHEET_NAME = "testes_beta";
+export const LINEAR_CORRECTIONS_PROJECT_ID = "linear";
+export const LINEAR_CORRECTIONS_SHEET_NAME = "correcoes_linear";
 
 function normalizeText(value: string): string {
   return value
@@ -147,7 +149,7 @@ export function getEmBetaClass(flag: BetaFlag): string {
     : "bg-beta-flag-no text-beta-flag-no-foreground";
 }
 
-export function rowsToBetaTests(rows: string[][]): BetaTestItem[] {
+export function rowsToBetaTests(rows: string[][], defaultProjectId = BETA_TESTS_PROJECT_ID): BetaTestItem[] {
   const header = rows[0] ?? [];
   const dataRows = rows.slice(1);
   const headerMap = new Map(header.map((column, index) => [normalizeHeader(column), index]));
@@ -167,7 +169,7 @@ export function rowsToBetaTests(rows: string[][]): BetaTestItem[] {
       if (!correcao || normalizeHeader(correcao) === "correcao") return null;
 
       const projectId =
-        getCell(cells, ["project_id", "projeto", "project"]) || BETA_TESTS_PROJECT_ID;
+        getCell(cells, ["project_id", "projeto", "project"]) || defaultProjectId;
       const id = getCell(cells, ["id"]) || `${projectId}-beta-${rowIndex + 1}`;
       const prioridadeRaw = getCell(cells, ["prioridade", "prioridade_1_5", "priority"], 2);
       const prioridade = Number.parseInt(prioridadeRaw || "1", 10);

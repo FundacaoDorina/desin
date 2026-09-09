@@ -10,6 +10,8 @@ import { useProjects } from "@/hooks/useProjects";
 import { useScripts } from "@/hooks/useScripts";
 import { useProjectDocs } from "@/hooks/useProjectDocs";
 import { useBetaTests } from "@/hooks/useBetaTests";
+import { useLinearCorrections } from "@/hooks/useLinearCorrections";
+import { BETA_TESTS_PROJECT_ID, LINEAR_CORRECTIONS_PROJECT_ID } from "@/lib/betaTests";
 import { getProjectDisplayStatus } from "@/lib/projectProgress";
 import { Loader2, AlertTriangle, RefreshCw } from "lucide-react";
 
@@ -133,8 +135,10 @@ const Index = ({ onLogout }: IndexProps) => {
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   const [isDocumentationOpen, setIsDocumentationOpen] = useState(false);
   const [isBetaTestsOpen, setIsBetaTestsOpen] = useState(false);
+  const [isLinearCorrectionsOpen, setIsLinearCorrectionsOpen] = useState(false);
   const [pageAnnouncement, setPageAnnouncement] = useState("");
   const betaTestsButtonRef = useRef<HTMLButtonElement>(null);
+  const linearCorrectionsButtonRef = useRef<HTMLButtonElement>(null);
 
   const { projects, isLoading, isError, isFromSheet, refetch } = useProjects();
   const {
@@ -152,6 +156,17 @@ const Index = ({ onLogout }: IndexProps) => {
     refetch: refetchBetaTests,
     hasBetaTestsArea,
   } = useBetaTests(selectedProjectId);
+  const {
+    items: linearCorrections,
+    isLoading: isLinearCorrectionsLoading,
+    isError: isLinearCorrectionsError,
+    refetch: refetchLinearCorrections,
+  } = useLinearCorrections(selectedProjectId);
+  const showLinearCorrectionsButton =
+    projects.some((project) => project.id === LINEAR_CORRECTIONS_PROJECT_ID) &&
+    (selectedProjectId === LINEAR_CORRECTIONS_PROJECT_ID ||
+      selectedProjectId === BETA_TESTS_PROJECT_ID);
+  const isCorrectionsViewOpen = isBetaTestsOpen || isLinearCorrectionsOpen;
   const hasScriptsProject = projects.some((project) => project.kind === "scripts");
   const projectsWithScripts = useMemo(() => {
     const shouldShowScriptsEntry =
@@ -185,6 +200,7 @@ const Index = ({ onLogout }: IndexProps) => {
     setSelectedProjectId(id);
     setIsDocumentationOpen(false);
     setIsBetaTestsOpen(false);
+    setIsLinearCorrectionsOpen(false);
 
     if (project) {
       // Limpa e redefine para o leitor de tela anunciar mesmo em trocas rápidas
@@ -208,6 +224,7 @@ const Index = ({ onLogout }: IndexProps) => {
     resetScroll();
     const frame = window.requestAnimationFrame(resetScroll);
     const timeoutId = window.setTimeout(() => {
+      if (isBetaTestsOpen || isLinearCorrectionsOpen) return;
       document.getElementById("titulo-projeto")?.focus({ preventScroll: true });
     }, 0);
 
@@ -215,7 +232,7 @@ const Index = ({ onLogout }: IndexProps) => {
       window.cancelAnimationFrame(frame);
       window.clearTimeout(timeoutId);
     };
-  }, [selectedProjectId, isScriptsProject, isScriptsLoading]);
+  }, [selectedProjectId, isScriptsProject, isScriptsLoading, isBetaTestsOpen, isLinearCorrectionsOpen]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -320,6 +337,7 @@ const Index = ({ onLogout }: IndexProps) => {
                           isDocumentationOpen={isDocumentationOpen}
                           onToggleDocumentation={() => {
                             setIsBetaTestsOpen(false);
+                            setIsLinearCorrectionsOpen(false);
                             setIsDocumentationOpen((prev) => !prev);
                           }}
                           hasBetaTestsArea={hasBetaTestsArea}
@@ -327,15 +345,31 @@ const Index = ({ onLogout }: IndexProps) => {
                           betaTestsButtonRef={betaTestsButtonRef}
                           onOpenBetaTests={() => {
                             setIsDocumentationOpen(false);
+                            setIsLinearCorrectionsOpen(false);
                             setIsBetaTestsOpen(true);
                             setPageAnnouncement("");
                             window.setTimeout(() => {
-                              setPageAnnouncement("Área testes em beta exibida");
+                              setPageAnnouncement("Área correções em beta exibida");
+                            }, 50);
+                          }}
+                          hasLinearCorrectionsArea={showLinearCorrectionsButton}
+                          isLinearCorrectionsOpen={isLinearCorrectionsOpen}
+                          linearCorrectionsButtonRef={linearCorrectionsButtonRef}
+                          onOpenLinearCorrections={() => {
+                            setIsDocumentationOpen(false);
+                            setIsBetaTestsOpen(false);
+                            setIsLinearCorrectionsOpen(true);
+                            if (selectedProjectId !== LINEAR_CORRECTIONS_PROJECT_ID) {
+                              setSelectedProjectId(LINEAR_CORRECTIONS_PROJECT_ID);
+                            }
+                            setPageAnnouncement("");
+                            window.setTimeout(() => {
+                              setPageAnnouncement("Área correções linear exibida");
                             }, 50);
                           }}
                         />
                         {isBetaTestsOpen && (
-                          <div id="testes-em-beta" className="mt-1">
+                          <div id="correcoes-em-beta" className="mt-1">
                             <BetaTestsView
                               items={betaTests}
                               isLoading={isBetaTestsLoading}
@@ -352,11 +386,35 @@ const Index = ({ onLogout }: IndexProps) => {
                             />
                           </div>
                         )}
+                        {isLinearCorrectionsOpen && selectedProjectId === LINEAR_CORRECTIONS_PROJECT_ID && (
+                          <div id="correcoes-linear" className="mt-1">
+                            <BetaTestsView
+                              items={linearCorrections}
+                              isLoading={isLinearCorrectionsLoading}
+                              isError={isLinearCorrectionsError}
+                              title="Correções linear"
+                              headingId="correcoes-linear-heading"
+                              loadingMessage="Carregando correções linear..."
+                              emptyMessage="Nenhuma correção cadastrada para o Linear."
+                              retryAriaLabel="Tentar carregar novamente as correções linear da planilha"
+                              caption="Tabela de correções do Linear. Colunas: correção com dificuldade, status, prioridade de 1 a 5, e se já está em beta."
+                              onRetry={() => refetchLinearCorrections()}
+                              onBack={() => {
+                                setIsLinearCorrectionsOpen(false);
+                                setPageAnnouncement("");
+                                window.setTimeout(() => {
+                                  setPageAnnouncement(`Projeto ${selectedProject.name} exibido`);
+                                  linearCorrectionsButtonRef.current?.focus();
+                                }, 50);
+                              }}
+                            />
+                          </div>
+                        )}
                       </>
                     )}
                   </div>
                 </div>
-                {!isScriptsProject && !isBetaTestsOpen && (
+                {!isScriptsProject && !isCorrectionsViewOpen && (
                   isDocumentationOpen ? (
                     <section id="project-documentation" className="bg-sidebar-light rounded p-4 md:p-6 lg:p-8 mt-6">
                       <h3 className="text-card-foreground font-bebas font-bold text-3xl md:text-4xl lg:text-5xl mb-3 md:mb-4">

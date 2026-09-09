@@ -12,7 +12,14 @@ interface ProjectDetailProps {
   isBetaTestsOpen?: boolean;
   onOpenBetaTests?: () => void;
   betaTestsButtonRef?: RefObject<HTMLButtonElement>;
+  hasLinearCorrectionsArea?: boolean;
+  isLinearCorrectionsOpen?: boolean;
+  onOpenLinearCorrections?: () => void;
+  linearCorrectionsButtonRef?: RefObject<HTMLButtonElement>;
 }
+
+const buttonClassName =
+  "bg-background text-foreground hover:bg-primary hover:text-primary-foreground font-bebas font-bold text-2xl md:text-3xl lg:text-4xl px-4 py-2 md:px-5 md:py-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
 
 const ProjectDetail = ({
   name,
@@ -25,8 +32,15 @@ const ProjectDetail = ({
   isBetaTestsOpen = false,
   onOpenBetaTests,
   betaTestsButtonRef,
+  hasLinearCorrectionsArea = false,
+  isLinearCorrectionsOpen = false,
+  onOpenLinearCorrections,
+  linearCorrectionsButtonRef,
 }: ProjectDetailProps) => {
   const hasDocumentation = !!documentationContent?.trim();
+  const isCorrectionsOpen = isBetaTestsOpen || isLinearCorrectionsOpen;
+  const showCorrectionsButtons =
+    (hasBetaTestsArea || hasLinearCorrectionsArea) && !isCorrectionsOpen;
 
   return (
     <div className="space-y-4 md:space-y-6">
@@ -41,7 +55,7 @@ const ProjectDetail = ({
               {name}
             </h2>
           </div>
-          {hasDocumentation && !isBetaTestsOpen && (
+          {hasDocumentation && !isCorrectionsOpen && (
             <button
               type="button"
               onClick={onToggleDocumentation}
@@ -60,21 +74,37 @@ const ProjectDetail = ({
           )}
         </div>
 
-        {hasBetaTestsArea && !isBetaTestsOpen && (
-          <button
-            ref={betaTestsButtonRef}
-            type="button"
-            onClick={onOpenBetaTests}
-            aria-expanded={isBetaTestsOpen}
-            aria-controls="testes-em-beta"
-            className="bg-background text-foreground hover:bg-primary hover:text-primary-foreground font-bebas font-bold text-2xl md:text-3xl lg:text-4xl px-4 py-2 md:px-5 md:py-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-          >
-            testes em beta
-          </button>
+        {showCorrectionsButtons && (
+          <div className="flex flex-wrap items-start gap-2">
+            {hasBetaTestsArea && (
+              <button
+                ref={betaTestsButtonRef}
+                type="button"
+                onClick={onOpenBetaTests}
+                aria-expanded={isBetaTestsOpen}
+                aria-controls="correcoes-em-beta"
+                className={buttonClassName}
+              >
+                correções em beta
+              </button>
+            )}
+            {hasLinearCorrectionsArea && (
+              <button
+                ref={linearCorrectionsButtonRef}
+                type="button"
+                onClick={onOpenLinearCorrections}
+                aria-expanded={isLinearCorrectionsOpen}
+                aria-controls="correcoes-linear"
+                className={buttonClassName}
+              >
+                correções linear
+              </button>
+            )}
+          </div>
         )}
       </div>
 
-      {!isBetaTestsOpen && (
+      {!isCorrectionsOpen && (
         <dl className="space-y-4 md:space-y-6">
           <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-0">
             <dt className="text-card-foreground font-bebas font-bold text-2xl md:text-3xl lg:text-4xl bg-sidebar-light px-3 py-1 rounded leading-loose">

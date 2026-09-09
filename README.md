@@ -101,9 +101,9 @@ Colunas esperadas:
 - `usage`
 - `link` (opcional)
 
-### Aba de testes em beta (`testes_beta`)
+### Aba de correções em beta (`testes_beta`)
 
-Usada na área **testes em beta** da Plataforma Braille. Pode ser a mesma tabela já usada hoje; a primeira linha deve ser o cabeçalho.
+Usada na área **correções em beta** da Plataforma Braille. A primeira linha deve ser o cabeçalho.
 
 Colunas esperadas (os nomes da planilha atual também são aceitos):
 
@@ -118,3 +118,11 @@ Colunas esperadas (os nomes da planilha atual também são aceitos):
 A cor da coluna Correção no site segue a dificuldade. Sem a coluna `DIFICULDADE`, status, prioridade e em beta continuam sincronizados; a escala de dificuldade usa o JSON local até essa coluna existir.
 
 No deploy com planilha publicada, configure `VITE_GOOGLE_SHEETS_BETA_GID` com o gid da aba `testes_beta`.
+
+### Aba de correções linear (`correcoes_linear`)
+
+Usada na área **correções linear** do projeto Linear (também acessível pelo botão ao lado de **correções em beta** na Plataforma Braille). Mesma estrutura da aba `testes_beta`.
+
+- `project_id` (opcional; padrão `linear`)
+
+No deploy com planilha publicada, configure `VITE_GOOGLE_SHEETS_LINEAR_GID` com o gid da aba `correcoes_linear`.

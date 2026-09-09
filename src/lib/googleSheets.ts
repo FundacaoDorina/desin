@@ -1,6 +1,12 @@
 import type { Project, TimelineYear, TimelineItemColor } from "@/types/project";
 import type { ScriptItem } from "@/types/script";
-import { BETA_TESTS_SHEET_NAME, rowsToBetaTests } from "@/lib/betaTests";
+import {
+  BETA_TESTS_PROJECT_ID,
+  BETA_TESTS_SHEET_NAME,
+  LINEAR_CORRECTIONS_PROJECT_ID,
+  LINEAR_CORRECTIONS_SHEET_NAME,
+  rowsToBetaTests,
+} from "@/lib/betaTests";
 import type { BetaTestItem } from "@/types/betaTest";
 
 function mapColorValue(value: string): TimelineItemColor {
@@ -381,33 +387,38 @@ export async function fetchProjectDocsFromSheets(
   return rowsToProjectDocsMap(rows);
 }
 
-export async function fetchBetaTestsFromSheets(
+export async function fetchCorrectionsFromSheets(
   sheetId: string,
-  publishedBetaGid?: string
+  options: {
+    publishedGid?: string;
+    sheetName: string;
+    defaultProjectId: string;
+    gidHint: string;
+  }
 ): Promise<BetaTestItem[]> {
   const isPublishedId = sheetId.startsWith("2PACX-");
   let csvText: string;
   const cacheBust = Date.now();
 
   if (isPublishedId) {
-    const gid = publishedBetaGid?.trim();
+    const gid = options.publishedGid?.trim();
     if (!gid) {
       throw new Error(
-        "Para planilha publicada, configure VITE_GOOGLE_SHEETS_BETA_GID com o gid da aba testes_beta."
+        `Para planilha publicada, configure ${options.gidHint} com o gid da aba ${options.sheetName}.`
       );
     }
     const url = `https://docs.google.com/spreadsheets/d/e/${sheetId}/pub?output=csv&gid=${encodeURIComponent(gid)}&_=${cacheBust}`;
     const response = await fetch(url);
     if (!response.ok) {
-      throw new Error(`Falha ao buscar testes em beta da planilha publicada: ${response.status}`);
+      throw new Error(`Falha ao buscar a aba ${options.sheetName} da planilha publicada: ${response.status}`);
     }
     csvText = await response.text();
   } else {
-    const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(BETA_TESTS_SHEET_NAME)}&_=${cacheBust}`;
+    const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(options.sheetName)}&_=${cacheBust}`;
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(
-        `Falha ao buscar testes em beta da planilha: ${response.status}. Verifique se a aba testes_beta existe e está compartilhada.`
+        `Falha ao buscar a aba ${options.sheetName}: ${response.status}. Verifique se a aba existe e está compartilhada.`
       );
     }
     csvText = await response.text();
@@ -415,11 +426,35 @@ export async function fetchBetaTestsFromSheets(
 
   if (csvText.trim().startsWith("<!DOCTYPE") || csvText.trim().startsWith("<html")) {
     throw new Error(
-      "A aba de testes em beta não está acessível publicamente. Publique a planilha para leitura."
+      `A aba ${options.sheetName} não está acessível publicamente. Publique a planilha para leitura.`
     );
   }
 
   const rows = parseCSV(csvText);
   if (rows.length < 2) return [];
-  return rowsToBetaTests(rows);
+  return rowsToBetaTests(rows, options.defaultProjectId);
+}
+
+export async function fetchBetaTestsFromSheets(
+  sheetId: string,
+  publishedBetaGid?: string
+): Promise<BetaTestItem[]> {
+  return fetchCorrectionsFromSheets(sheetId, {
+    publishedGid: publishedBetaGid,
+    sheetName: BETA_TESTS_SHEET_NAME,
+    defaultProjectId: BETA_TESTS_PROJECT_ID,
+    gidHint: "VITE_GOOGLE_SHEETS_BETA_GID",
+  });
+}
+
+export async function fetchLinearCorrectionsFromSheets(
+  sheetId: string,
+  publishedLinearGid?: string
+): Promise<BetaTestItem[]> {
+  return fetchCorrectionsFromSheets(sheetId, {
+    publishedGid: publishedLinearGid,
+    sheetName: LINEAR_CORRECTIONS_SHEET_NAME,
+    defaultProjectId: LINEAR_CORRECTIONS_PROJECT_ID,
+    gidHint: "VITE_GOOGLE_SHEETS_LINEAR_GID",
+  });
 }

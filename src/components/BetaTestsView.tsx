@@ -16,6 +16,12 @@ interface BetaTestsViewProps {
   isError?: boolean;
   onRetry?: () => void;
   onBack: () => void;
+  title?: string;
+  headingId?: string;
+  loadingMessage?: string;
+  emptyMessage?: string;
+  retryAriaLabel?: string;
+  caption?: string;
 }
 
 const DIFFICULTY_LEGEND: Array<{ id: BetaDifficulty; label: string; className: string }> = [
@@ -29,7 +35,19 @@ const DIFFICULTY_LEGEND: Array<{ id: BetaDifficulty; label: string; className: s
   { id: "dificil", label: "Difícil", className: "bg-beta-hard text-beta-hard-foreground" },
 ];
 
-const BetaTestsView = ({ items, isLoading, isError, onRetry, onBack }: BetaTestsViewProps) => {
+const BetaTestsView = ({
+  items,
+  isLoading,
+  isError,
+  onRetry,
+  onBack,
+  title = "Correções em beta",
+  headingId = "correcoes-em-beta-heading",
+  loadingMessage = "Carregando correções em beta...",
+  emptyMessage = "Nenhuma correção cadastrada para correções em beta.",
+  retryAriaLabel = "Tentar carregar novamente as correções em beta da planilha",
+  caption = "Tabela de correções em teste na versão beta. Colunas: correção com dificuldade, status, prioridade de 1 a 5, e se já está em beta.",
+}: BetaTestsViewProps) => {
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
@@ -37,7 +55,7 @@ const BetaTestsView = ({ items, isLoading, isError, onRetry, onBack }: BetaTests
   }, []);
 
   return (
-    <section className="space-y-3 md:space-y-4" aria-labelledby="testes-em-beta-heading">
+    <section className="space-y-3 md:space-y-4" aria-labelledby={headingId}>
       <div className="flex flex-wrap items-center gap-3">
         <button
           type="button"
@@ -47,12 +65,12 @@ const BetaTestsView = ({ items, isLoading, isError, onRetry, onBack }: BetaTests
           Voltar
         </button>
         <h3
-          id="testes-em-beta-heading"
+          id={headingId}
           ref={headingRef}
           tabIndex={-1}
           className="text-card-foreground font-bebas font-bold text-3xl md:text-4xl lg:text-5xl rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
-          Testes em beta
+          {title}
         </h3>
       </div>
 
@@ -89,7 +107,7 @@ const BetaTestsView = ({ items, isLoading, isError, onRetry, onBack }: BetaTests
             <button
               type="button"
               onClick={onRetry}
-              aria-label="Tentar carregar novamente os testes em beta da planilha"
+              aria-label={retryAriaLabel}
               className="ml-auto flex items-center gap-1 px-3 py-1 rounded bg-warning/30 hover:bg-warning/50 transition-colors"
             >
               <RefreshCw className="w-4 h-4" aria-hidden="true" />
@@ -101,18 +119,17 @@ const BetaTestsView = ({ items, isLoading, isError, onRetry, onBack }: BetaTests
 
       {isLoading ? (
         <p className="text-muted-foreground font-bebas text-xl" role="status">
-          Carregando testes em beta...
+          {loadingMessage}
         </p>
       ) : items.length === 0 ? (
         <p className="text-card-foreground font-bebas text-2xl">
-          Nenhuma correção cadastrada para testes em beta.
+          {emptyMessage}
         </p>
       ) : (
         <div className="overflow-x-auto">
           <table className="w-full border-collapse min-w-[640px]">
             <caption className="sr-only">
-              Tabela de correções em teste na versão beta. Colunas: correção com dificuldade, status,
-              prioridade de 1 a 5, e se já está em beta.
+              {caption}
             </caption>
             <thead>
               <tr className="bg-sidebar-dark">
