@@ -5,7 +5,9 @@ import betaTestsData from "@/data/betaTests.json";
 import type { BetaTestItem } from "@/types/betaTest";
 
 const SHEETS_ID = import.meta.env.VITE_GOOGLE_SHEETS_ID as string | undefined;
-const BETA_GID = import.meta.env.VITE_GOOGLE_SHEETS_BETA_GID as string | undefined;
+const BETA_GID =
+  (import.meta.env.VITE_GOOGLE_SHEETS_BETA_GID as string | undefined)?.trim() ||
+  "2073050098";
 
 export function useBetaTests(projectId?: string | null) {
   const canFetchFromSheet =
