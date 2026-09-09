@@ -5,7 +5,9 @@ import linearCorrectionsData from "@/data/linearCorrections.json";
 import type { BetaTestItem } from "@/types/betaTest";
 
 const SHEETS_ID = import.meta.env.VITE_GOOGLE_SHEETS_ID as string | undefined;
-const LINEAR_GID = import.meta.env.VITE_GOOGLE_SHEETS_LINEAR_GID as string | undefined;
+const LINEAR_GID =
+  (import.meta.env.VITE_GOOGLE_SHEETS_LINEAR_GID as string | undefined)?.trim() ||
+  "1449802488";
 
 export function useLinearCorrections(projectId?: string | null) {
   const shouldLoad =
