@@ -1,31 +1,23 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchScriptsFromSheets } from "@/lib/googleSheets";
-import scriptsData from "@/data/scripts.json";
+import { apiGet, shouldRetry } from "@/lib/api";
 import type { ScriptItem } from "@/types/script";
-
-const SHEETS_ID = import.meta.env.VITE_GOOGLE_SHEETS_ID as string | undefined;
-const SCRIPTS_GID = import.meta.env.VITE_GOOGLE_SHEETS_SCRIPTS_GID as string | undefined;
 
 export function useScripts() {
   const { data, isLoading, isError, error, refetch } = useQuery({
-    queryKey: ["scripts", SHEETS_ID, SCRIPTS_GID],
-    queryFn: () => fetchScriptsFromSheets(SHEETS_ID!, SCRIPTS_GID),
-    enabled: !!SHEETS_ID,
+    queryKey: ["scripts"],
+    queryFn: () => apiGet<ScriptItem[]>("scripts"),
     staleTime: 5 * 60 * 1000,
-    retry: 2,
+    retry: shouldRetry,
     refetchOnWindowFocus: true,
   });
 
-  const scripts: ScriptItem[] =
-    data ?? (!SHEETS_ID ? (scriptsData as ScriptItem[]) : []);
-
   return {
-    scripts,
-    isLoading: !!SHEETS_ID && isLoading,
+    scripts: data ?? [],
+    isLoading,
     isError,
     error,
     isFromSheet: !!data,
-    isConfigured: !!SHEETS_ID,
+    isConfigured: true,
     refetch,
   };
 }

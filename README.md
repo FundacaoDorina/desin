@@ -41,29 +41,72 @@ Este projeto foi construído com:
 
 - `src/components/` - Componentes React reutilizáveis
 - `src/pages/` - Páginas da aplicação
-- `src/data/` - Dados dos projetos (JSON)
+- `api/` - Funções serverless (acesso e leitura da planilha privada)
+- `apps-script/` - Script que entrega a planilha ao servidor
 - `src/types/` - Definições de tipos TypeScript
 
-## Controle de acesso + sincronização segura
+## Acesso e dados
 
-O acesso à interface é protegido por senha compartilhada e os dados da planilha são lidos por funções serverless em `api/`, sem expor o Google Sheets no frontend.
+- **Quem está na rede da Fundação** entra direto, sem senha (IPs em `ALLOWED_IPS`).
+- **Quem está fora** usa uma frase-senha (`ACCESS_PASSWORD`). A sessão dura 8 horas.
+- **Os dados** continuam na planilha `desin` do Google, que fica **privada**. O navegador nunca acessa a planilha: ele pede os dados às funções em `api/`, que os buscam num App da Web do Apps Script com uma chave secreta. Sem Google Cloud.
 
-### Variáveis de ambiente
+### Variáveis de ambiente (Vercel → Settings → Environment Variables)
 
-- `ACCESS_PASSWORD`: senha compartilhada usada na tela de acesso
-- `ACCESS_TOKEN_SECRET`: segredo para assinar o token de sessão
-- `GOOGLE_SERVICE_ACCOUNT_EMAIL`: email da Service Account com acesso de leitura
-- `GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY`: chave privada da Service Account (com `\\n` no lugar de quebras de linha)
-- `GOOGLE_SHEETS_ID`: ID da planilha privada
+| Variável | O que é |
+|---|---|
+| `ALLOWED_IPS` | IPs públicos da Fundação (ou faixas CIDR), separados por vírgula. Vazio = todos precisam da senha. |
+| `ACCESS_PASSWORD` | Frase-senha para quem está fora. Vazio = acesso só pela rede da Fundação. |
+| `ACCESS_TOKEN_SECRET` | Segredo que assina as sessões (48+ caracteres aleatórios). |
+| `APPS_SCRIPT_URL` | URL do App da Web (`https://script.google.com/macros/s/…/exec`). |
+| `APPS_SCRIPT_KEY` | Chave gerada no Apps Script por `plataformaGerarChave`. |
 
-### Configuração da planilha privada
+Nenhuma dessas variáveis pode ter o prefixo `VITE_`: tudo que começa com `VITE_` é embutido no JavaScript público.
 
-1. Crie uma Service Account no Google Cloud com API Google Sheets habilitada.
-2. Compartilhe a planilha com o email da Service Account como visualizador.
-3. Configure as variáveis acima no ambiente da Vercel.
-4. Remova qualquer publicação da planilha na web e desative compartilhamento público por link.
+### 1. Apps Script (uns 10 minutos, uma vez só)
+
+Use o mesmo projeto `DesIn` do script.google.com que já escreve na planilha (agenda-desin). Ele já tem acesso a ela.
+
+1. Abra o projeto `DesIn` em script.google.com.
+2. **Arquivos → + → Script**, nome `plataforma`. Cole todo o conteúdo de [`apps-script/plataforma.gs`](apps-script/plataforma.gs) e salve. O `desin.gs` não muda.
+3. No menu ao lado de **Executar**, escolha `plataformaGerarChave` e clique **Executar**. Em **Registro de execução** aparece a chave: copie para `APPS_SCRIPT_KEY` na Vercel.
+4. **Implantar → Nova implantação →** engrenagem **→ App da Web**:
+   - Descrição: `plataforma`
+   - Executar como: **Eu**
+   - Quem pode acessar: **Qualquer pessoa** (quem não tem a chave não recebe nada)
+5. **Implantar**, autorize se pedir, e copie a **URL do app da Web** (termina em `/exec`) para `APPS_SCRIPT_URL` na Vercel.
+
+Se um dia alterar o `plataforma.gs`, use **Implantar → Gerenciar implantações → editar → Nova versão** para manter a mesma URL.
+
+Para trocar a chave: rode `plataformaGerarChave` de novo e atualize `APPS_SCRIPT_KEY` na Vercel.
+
+### 2. Rede da Fundação
+
+Peça ao TI o **IP público fixo** da Fundação (IPv4 e, se houver, a faixa IPv6) e coloque em `ALLOWED_IPS`. Para conferir, acesse de dentro da Fundação um site como ifconfig.me. Se a Fundação não tiver IP fixo, deixe vazio e todos usam a frase-senha.
+
+### 3. Frase-senha
+
+Quatro palavras comuns soltas (ex.: `janela-pipoca-trilho-azul`) são fáceis de lembrar e difíceis de adivinhar. Não use nome da Fundação, do departamento nem do ano.
+
+`/api/auth` bloqueia um IP após 10 senhas erradas em 15 minutos, mas esse contador fica na memória de cada instância. Para um limite que vale em todas as instâncias, crie no painel da Vercel (Firewall → Rules) uma regra de **rate limit** para `POST /api/auth` (por exemplo, 10 requisições por minuto por IP).
+
+Trocar `ACCESS_PASSWORD` encerra todas as sessões abertas.
+
+### 4. Ordem para colocar no ar
+
+1. Apps Script (passo 1) e variáveis na Vercel.
+2. Deploy. Confirme que o site carrega os dados, de dentro e de fora da Fundação.
+3. Só então feche a planilha:
+   - **Arquivo → Compartilhar → Publicar na Web → Interromper publicação**.
+   - **Compartilhar**: confira que a conta que roda o Apps Script (e quem edita) aparece pelo nome, como Editor. Depois mude "Acesso geral" para **Restrito**.
+
+### Desenvolvimento local
+
+Copie `.env.example` para `.env` e preencha. `npm run dev` executa as mesmas funções de `api/` usadas na Vercel.
 
 ### Aba de projetos (`roadmap`)
+
+Pode ter ou não uma linha de cabeçalho. Sem cabeçalho (como a automação do agenda-desin escreve), as colunas são lidas pela posição, de A a I, na ordem abaixo.
 
 Colunas esperadas:
 
@@ -115,14 +158,10 @@ Colunas esperadas (os nomes da planilha atual também são aceitos):
 - `project_id` (opcional; padrão `plataforma-braille`)
 - `id` (opcional)
 
-A cor da coluna Correção no site segue a dificuldade. Sem a coluna `DIFICULDADE`, status, prioridade e em beta continuam sincronizados; a escala de dificuldade usa o JSON local até essa coluna existir.
-
-No deploy com planilha publicada, configure `VITE_GOOGLE_SHEETS_BETA_GID` com o gid da aba `testes_beta`.
+A cor da coluna Correção no site segue a dificuldade. Sem a coluna `DIFICULDADE`, a correção aparece sem cor de dificuldade.
 
 ### Aba de correções linear (`correcoes_linear`)
 
 Usada na área **correções linear** do projeto Linear (também acessível pelo botão ao lado de **correções em beta** na Plataforma Braille). Mesma estrutura da aba `testes_beta`.
 
 - `project_id` (opcional; padrão `linear`)
-
-No deploy com planilha publicada, configure `VITE_GOOGLE_SHEETS_LINEAR_GID` com o gid da aba `correcoes_linear`.

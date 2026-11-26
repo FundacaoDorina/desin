@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { ExternalLink } from "lucide-react";
 import type { ScriptItem } from "@/types/script";
+import { safeExternalUrl } from "@/lib/utils";
 
 interface ScriptsDetailProps {
   scripts: ScriptItem[];
@@ -88,9 +89,9 @@ const ScriptsDetail = ({ scripts }: ScriptsDetailProps) => {
             <h3 className="font-bebas font-bold text-card-foreground text-3xl md:text-4xl">
               {selectedScript.name}
             </h3>
-            {selectedScript.link && (
+            {safeExternalUrl(selectedScript.link) && (
               <a
-                href={selectedScript.link}
+                href={safeExternalUrl(selectedScript.link)}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Abrir referência de ${selectedScript.name} (abre em nova aba)`}

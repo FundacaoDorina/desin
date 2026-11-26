@@ -2,53 +2,64 @@ import crypto from "node:crypto";
 
 const ACCESS_TOKEN_TTL_SECONDS = 60 * 60 * 8;
 
-function getAccessSecret(): string {
-  const secret = process.env.ACCESS_TOKEN_SECRET;
-  if (!secret) {
-    throw new Error("Variável ACCESS_TOKEN_SECRET não configurada.");
+function requiredEnv(name: string): string {
+  const value = process.env[name]?.trim();
+  if (!value) {
+    throw new Error(`Variável ${name} não configurada.`);
   }
-  return secret;
+  return value;
 }
 
-function base64UrlEncode(value: string): string {
-  return Buffer.from(value).toString("base64url");
+function hmac(value: string): string {
+  return crypto.createHmac("sha256", requiredEnv("ACCESS_TOKEN_SECRET")).update(value).digest("base64url");
 }
 
-function base64UrlDecode(value: string): string {
-  return Buffer.from(value, "base64url").toString("utf8");
+function safeEqual(a: string, b: string): boolean {
+  // Compara os HMACs (tamanho fixo) para não vazar o tamanho nem o conteúdo por tempo de resposta.
+  return crypto.timingSafeEqual(
+    Buffer.from(hmac(`cmp:${a}`)),
+    Buffer.from(hmac(`cmp:${b}`))
+  );
 }
 
-function signPayload(payload: string): string {
-  return crypto.createHmac("sha256", getAccessSecret()).update(payload).digest("base64url");
+/**
+ * Identificador da senha atual. Vai dentro do token: quando ACCESS_PASSWORD é trocada,
+ * todos os tokens emitidos com a senha antiga deixam de valer.
+ */
+function passwordVersion(): string {
+  return hmac(`pv:${requiredEnv("ACCESS_PASSWORD")}`).slice(0, 16);
+}
+
+export function isValidPassword(provided: string | undefined): boolean {
+  if (!provided) return false;
+  return safeEqual(provided.trim(), requiredEnv("ACCESS_PASSWORD"));
 }
 
 export function issueAccessToken(): string {
   const payload = JSON.stringify({
     exp: Math.floor(Date.now() / 1000) + ACCESS_TOKEN_TTL_SECONDS,
+    pv: passwordVersion(),
   });
-  const encodedPayload = base64UrlEncode(payload);
-  const signature = signPayload(encodedPayload);
-  return `${encodedPayload}.${signature}`;
+  const encodedPayload = Buffer.from(payload).toString("base64url");
+  return `${encodedPayload}.${hmac(encodedPayload)}`;
 }
 
 export function verifyAccessToken(token: string): boolean {
-  const [encodedPayload, signature] = token.split(".");
-  if (!encodedPayload || !signature) return false;
+  const [encodedPayload, signature, ...rest] = token.split(".");
+  if (!encodedPayload || !signature || rest.length > 0) return false;
 
-  const expectedSignature = signPayload(encodedPayload);
   const signatureBuffer = Buffer.from(signature);
-  const expectedBuffer = Buffer.from(expectedSignature);
-  if (signatureBuffer.length !== expectedBuffer.length) {
-    return false;
-  }
-  if (!crypto.timingSafeEqual(signatureBuffer, expectedBuffer)) {
-    return false;
-  }
+  const expectedBuffer = Buffer.from(hmac(encodedPayload));
+  if (signatureBuffer.length !== expectedBuffer.length) return false;
+  if (!crypto.timingSafeEqual(signatureBuffer, expectedBuffer)) return false;
 
   try {
-    const payload = JSON.parse(base64UrlDecode(encodedPayload)) as { exp?: number };
-    if (!payload.exp) return false;
-    return payload.exp > Math.floor(Date.now() / 1000);
+    const payload = JSON.parse(Buffer.from(encodedPayload, "base64url").toString("utf8")) as {
+      exp?: unknown;
+      pv?: unknown;
+    };
+    if (typeof payload.exp !== "number" || payload.exp <= Math.floor(Date.now() / 1000)) return false;
+    return payload.pv === passwordVersion();
   } catch {
     return false;
   }
@@ -58,6 +69,6 @@ export function extractBearerToken(req: { headers?: Record<string, string | stri
   const authorization = req.headers?.authorization;
   const headerValue = Array.isArray(authorization) ? authorization[0] : authorization;
   if (!headerValue) return null;
-  const match = headerValue.match(/^Bearer (.+)$/i);
+  const match = headerValue.match(/^Bearer (\S+)$/i);
   return match?.[1] ?? null;
 }

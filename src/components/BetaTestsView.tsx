@@ -101,7 +101,7 @@ const BetaTestsView = ({
         >
           <AlertTriangle className="w-5 h-5 flex-shrink-0" aria-hidden="true" />
           <span className="font-bebas text-lg">
-            Não foi possível carregar da planilha. Exibindo dados locais.
+            Não foi possível carregar as correções.
           </span>
           {onRetry && (
             <button
