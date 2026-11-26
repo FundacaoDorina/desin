@@ -128,7 +128,8 @@ function renderDocumentationBlocks(documentation: string) {
 }
 
 interface IndexProps {
-  onLogout: () => void;
+  /** Ausente quando o acesso é pela rede da Fundação (não há sessão para encerrar). */
+  onLogout?: () => void;
 }
 
 const Index = ({ onLogout }: IndexProps) => {
@@ -258,12 +259,12 @@ const Index = ({ onLogout }: IndexProps) => {
               <div className="flex items-center gap-2 mb-4 px-4 py-3 rounded bg-warning/20 text-warning-foreground border border-warning/30" role="alert">
                 <AlertTriangle className="w-5 h-5 flex-shrink-0" aria-hidden="true" />
                 <span className="font-bebas text-lg">
-                  Não foi possível carregar da planilha. Exibindo dados locais.
+                  Não foi possível carregar os projetos.
                 </span>
                 <button
                   type="button"
                   onClick={() => refetch()}
-                  aria-label="Tentar carregar novamente da planilha"
+                  aria-label="Tentar carregar os projetos novamente"
                   className="ml-auto flex items-center gap-1 px-3 py-1 rounded bg-warning/30 hover:bg-warning/50 transition-colors"
                 >
                   <RefreshCw className="w-4 h-4" aria-hidden="true" />
@@ -310,10 +311,7 @@ const Index = ({ onLogout }: IndexProps) => {
                           <div className="flex items-center gap-2 px-4 py-3 rounded bg-warning/20 text-warning-foreground border border-warning/30">
                             <AlertTriangle className="w-5 h-5 flex-shrink-0" />
                             <span className="font-bebas text-lg">
-                              Não foi possível carregar os scripts da planilha.
-                              {isScriptsConfigured && !import.meta.env.VITE_GOOGLE_SHEETS_SCRIPTS_GID
-                                ? " Configure VITE_GOOGLE_SHEETS_SCRIPTS_GID no ambiente de deploy."
-                                : ""}
+                              Não foi possível carregar os scripts.
                             </span>
                             <button
                               onClick={() => refetchScripts()}

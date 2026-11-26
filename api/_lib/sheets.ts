@@ -1,50 +1,61 @@
-import { google } from "googleapis";
+/**
+ * Lê abas da planilha privada pelo App da Web do Apps Script (apps-script/plataforma.gs).
+ * A URL e a chave ficam só nas variáveis do servidor; o navegador nunca as vê.
+ */
+const REQUEST_TIMEOUT_MS = 20_000;
+const CACHE_TTL_MS = 30_000;
+
+const cache = new Map<string, { at: number; rows: Promise<string[][]> }>();
 
 function requiredEnv(name: string): string {
-  const value = process.env[name];
+  const value = process.env[name]?.trim();
   if (!value) {
     throw new Error(`Variável ${name} não configurada.`);
   }
   return value;
 }
 
-async function getSheetsClient() {
-  const email = requiredEnv("GOOGLE_SERVICE_ACCOUNT_EMAIL");
-  const privateKey = requiredEnv("GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY").replace(/\\n/g, "\n");
+async function fetchSheetRows(sheetName: string): Promise<string[][]> {
+  const url = requiredEnv("APPS_SCRIPT_URL");
+  if (!/^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(url)) {
+    throw new Error("APPS_SCRIPT_URL deve ser a URL do App da Web (https://script.google.com/macros/s/…/exec).");
+  }
 
-  const auth = new google.auth.JWT({
-    email,
-    key: privateKey,
-    scopes: ["https://www.googleapis.com/auth/spreadsheets.readonly"],
+  // O Apps Script responde ao POST com um redirecionamento para o resultado; o fetch segue sozinho.
+  const response = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ chave: requiredEnv("APPS_SCRIPT_KEY"), aba: sheetName }),
+    redirect: "follow",
+    signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
   });
+  if (!response.ok) {
+    throw new Error(`Apps Script respondeu ${response.status} para a aba ${sheetName}.`);
+  }
 
-  await auth.authorize();
-  return google.sheets({ version: "v4", auth });
+  let data: { linhas?: unknown; erro?: unknown };
+  try {
+    data = (await response.json()) as typeof data;
+  } catch {
+    throw new Error("Apps Script não devolveu JSON. Confira se a implantação permite acesso a 'Qualquer pessoa'.");
+  }
+  if (data.erro) {
+    throw new Error(`Apps Script recusou a aba ${sheetName}: ${String(data.erro)}.`);
+  }
+  if (!Array.isArray(data.linhas) || !data.linhas.every(Array.isArray)) {
+    throw new Error(`Resposta inesperada do Apps Script para a aba ${sheetName}.`);
+  }
+  return (data.linhas as unknown[][]).map((cells) => cells.map((cell) => `${cell ?? ""}`));
 }
 
+/** Linhas de uma aba, como texto. Guarda o resultado por 30 s em cada instância. */
 export async function getSheetRows(sheetName: string): Promise<string[][]> {
-  const spreadsheetId = requiredEnv("GOOGLE_SHEETS_ID");
-  const sheets = await getSheetsClient();
-  const response = await sheets.spreadsheets.values.get({
-    spreadsheetId,
-    range: sheetName,
-  });
+  const now = Date.now();
+  const cached = cache.get(sheetName);
+  if (cached && now - cached.at < CACHE_TTL_MS) return cached.rows;
 
-  const rows = response.data.values ?? [];
-  return rows.map((cells) => cells.map((cell) => `${cell ?? ""}`));
-}
-
-export function createHeaderMap(header: string[]): Map<string, number> {
-  return new Map(header.map((column, index) => [column.trim().toLowerCase(), index]));
-}
-
-export function getCellByHeader(
-  cells: string[],
-  headerMap: Map<string, number>,
-  headerName: string,
-  fallbackIndex: number
-): string {
-  const index = headerMap.get(headerName);
-  if (index === undefined) return cells[fallbackIndex] ?? "";
-  return cells[index] ?? "";
+  const rows = fetchSheetRows(sheetName);
+  cache.set(sheetName, { at: now, rows });
+  rows.catch(() => cache.delete(sheetName));
+  return rows;
 }

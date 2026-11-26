@@ -1,82 +1,42 @@
-export const config = { runtime: "edge" };
+import { isValidPassword, issueAccessToken } from "./_lib/auth.js";
+import { type ApiRequest, type ApiResponse, getClientIp, sendServerError } from "./_lib/http.js";
+import { getPasswordFromRequestBody } from "./_lib/parseBody.js";
+import { clearFailures, getLockoutSeconds, registerFailure } from "./_lib/rateLimit.js";
 
-const TOKEN_TTL_SECONDS = 60 * 60 * 8;
+const FAILURE_DELAY_MS = 800;
 
-function toBase64Url(value: string): string {
-  const bytes = new TextEncoder().encode(value);
-  let binary = "";
-  for (const byte of bytes) binary += String.fromCharCode(byte);
-  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
-}
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-async function signPayload(secret: string, payload: string): Promise<string> {
-  const encoder = new TextEncoder();
-  const key = await crypto.subtle.importKey(
-    "raw",
-    encoder.encode(secret),
-    { name: "HMAC", hash: "SHA-256" },
-    false,
-    ["sign"]
-  );
-  const signature = await crypto.subtle.sign("HMAC", key, encoder.encode(payload));
-  const bytes = new Uint8Array(signature);
-  let binary = "";
-  for (const byte of bytes) binary += String.fromCharCode(byte);
-  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
-}
+export default async function handler(req: ApiRequest, res: ApiResponse) {
+  res.setHeader("Cache-Control", "no-store");
 
-async function issueAccessToken(secret: string): Promise<string> {
-  const encodedPayload = toBase64Url(
-    JSON.stringify({ exp: Math.floor(Date.now() / 1000) + TOKEN_TTL_SECONDS })
-  );
-  const signature = await signPayload(secret, encodedPayload);
-  return `${encodedPayload}.${signature}`;
-}
+  if (req.method !== "POST") {
+    res.setHeader("Allow", "POST");
+    return res.status(405).json({ error: "Método não permitido." });
+  }
 
-function getPasswordFromBody(body: unknown): string | undefined {
-  if (body == null || typeof body !== "object" || !("password" in body)) return undefined;
-  const password = (body as { password?: unknown }).password;
-  return typeof password === "string" ? password : undefined;
-}
+  if (!process.env.ACCESS_PASSWORD?.trim()) {
+    return res.status(403).json({ error: "O acesso por senha está desativado. Use a rede da Fundação." });
+  }
 
-export default async function handler(request: Request): Promise<Response> {
-  if (request.method !== "POST") {
-    return Response.json({ error: "Método não permitido." }, { status: 405 });
+  const ip = getClientIp(req);
+  const lockout = getLockoutSeconds(ip);
+  if (lockout > 0) {
+    res.setHeader("Retry-After", String(lockout));
+    return res.status(429).json({ error: "Muitas tentativas. Aguarde alguns minutos e tente novamente." });
   }
 
   try {
-    const configuredPassword = process.env.ACCESS_PASSWORD?.trim();
-    if (!configuredPassword) {
-      return Response.json(
-        { error: "ACCESS_PASSWORD não configurado na Vercel." },
-        { status: 500 }
-      );
+    const password = getPasswordFromRequestBody(req.body);
+    if (!isValidPassword(password)) {
+      registerFailure(ip);
+      await sleep(FAILURE_DELAY_MS);
+      return res.status(401).json({ error: "Senha inválida." });
     }
 
-    const tokenSecret = process.env.ACCESS_TOKEN_SECRET?.trim();
-    if (!tokenSecret) {
-      return Response.json(
-        { error: "ACCESS_TOKEN_SECRET não configurado na Vercel." },
-        { status: 500 }
-      );
-    }
-
-    let body: unknown;
-    try {
-      body = await request.json();
-    } catch {
-      return Response.json({ error: "Corpo da requisição inválido." }, { status: 400 });
-    }
-
-    const providedPassword = getPasswordFromBody(body)?.trim();
-    if (!providedPassword || providedPassword !== configuredPassword) {
-      return Response.json({ error: "Senha inválida." }, { status: 401 });
-    }
-
-    const token = await issueAccessToken(tokenSecret);
-    return Response.json({ token }, { status: 200 });
+    clearFailures(ip);
+    return res.status(200).json({ token: issueAccessToken() });
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Erro ao processar login.";
-    return Response.json({ error: message }, { status: 500 });
+    return sendServerError(res, "login", error);
   }
 }

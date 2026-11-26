@@ -6,7 +6,8 @@ import { devApiPlugin } from "./vite-plugin-dev-api";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   server: {
-    host: "::",
+    // Só aceita conexões desta máquina. Para testar em outro aparelho da rede, rode `npm run dev -- --host`.
+    host: "localhost",
     port: 8080,
   },
   plugins: [react(), devApiPlugin(mode)],

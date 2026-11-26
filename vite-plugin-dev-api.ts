@@ -1,74 +1,78 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 import type { Plugin } from "vite";
 import { loadEnv } from "vite";
-import { issueAccessToken } from "./api/_lib/auth";
 
-function readJsonBody(req: IncomingMessage): Promise<{ password?: string }> {
-  return new Promise((resolve, reject) => {
+const ROUTES = new Set(["auth", "session", "projects", "scripts", "project-docs", "beta-tests", "linear-corrections"]);
+
+function readJsonBody(req: IncomingMessage): Promise<unknown> {
+  return new Promise((resolve) => {
     const chunks: Buffer[] = [];
     req.on("data", (chunk) => chunks.push(Buffer.from(chunk)));
     req.on("end", () => {
       try {
         const raw = Buffer.concat(chunks).toString("utf8");
-        resolve(raw ? (JSON.parse(raw) as { password?: string }) : {});
+        resolve(raw ? JSON.parse(raw) : undefined);
       } catch {
-        reject(new Error("Corpo da requisição inválido."));
+        resolve(undefined);
       }
     });
-    req.on("error", reject);
+    req.on("error", () => resolve(undefined));
   });
 }
 
-function sendJson(res: ServerResponse, statusCode: number, payload: unknown) {
-  res.statusCode = statusCode;
-  res.setHeader("Content-Type", "application/json");
-  res.end(JSON.stringify(payload));
+/** Adapta a resposta do Node ao formato (status().json()) usado pelas funções da Vercel. */
+function adaptResponse(res: ServerResponse) {
+  const adapted = {
+    status(code: number) {
+      res.statusCode = code;
+      return adapted;
+    },
+    json(payload: unknown) {
+      res.setHeader("Content-Type", "application/json; charset=utf-8");
+      res.end(JSON.stringify(payload));
+    },
+    setHeader(name: string, value: string) {
+      res.setHeader(name, value);
+      return adapted;
+    },
+  };
+  return adapted;
 }
 
-/** Expõe /api/auth localmente quando se usa `npm run dev` (Vite). */
+/**
+ * Em `npm run dev`, executa as mesmas funções de `api/` que rodam na Vercel,
+ * usando as variáveis do arquivo .env local (que nunca vai para o navegador).
+ */
 export function devApiPlugin(mode: string): Plugin {
-  const env = loadEnv(mode, process.cwd(), "");
-
   return {
-    name: "dev-api-auth",
+    name: "dev-api",
+    apply: "serve",
     configureServer(server) {
+      const env = loadEnv(mode, process.cwd(), "");
+      for (const [key, value] of Object.entries(env)) {
+        if (!key.startsWith("VITE_") && process.env[key] === undefined) process.env[key] = value;
+      }
+
       server.middlewares.use(async (req, res, next) => {
-            const pathname = req.url?.split("?")[0];
-            if (pathname !== "/api/auth") {
-              next();
-              return;
-            }
+        const match = req.url?.split("?")[0].match(/^\/api\/([a-z-]+)\/?$/);
+        if (!match || !ROUTES.has(match[1])) {
+          next();
+          return;
+        }
 
-            if (req.method !== "POST") {
-              sendJson(res, 405, { error: "Método não permitido." });
-              return;
-            }
-
-            try {
-              const configuredPassword = env.ACCESS_PASSWORD;
-              if (!configuredPassword) {
-                sendJson(res, 500, { error: "A senha de acesso não foi configurada no .env." });
-                return;
-              }
-
-              if (!env.ACCESS_TOKEN_SECRET) {
-                sendJson(res, 500, { error: "ACCESS_TOKEN_SECRET não configurado no .env." });
-                return;
-              }
-
-              process.env.ACCESS_TOKEN_SECRET = env.ACCESS_TOKEN_SECRET;
-
-              const body = await readJsonBody(req);
-              if (!body.password || body.password !== configuredPassword) {
-                sendJson(res, 401, { error: "Senha inválida." });
-                return;
-              }
-
-              const token = issueAccessToken();
-              sendJson(res, 200, { token });
-            } catch {
-              sendJson(res, 500, { error: "Erro ao processar login." });
-            }
+        try {
+          const mod = await server.ssrLoadModule(`/api/${match[1]}.ts`);
+          const body = req.method === "POST" ? await readJsonBody(req) : undefined;
+          await mod.default(
+            { method: req.method, url: req.url, headers: req.headers, body, socket: req.socket },
+            adaptResponse(res)
+          );
+        } catch (error) {
+          console.error("[dev-api]", error);
+          res.statusCode = 500;
+          res.setHeader("Content-Type", "application/json; charset=utf-8");
+          res.end(JSON.stringify({ error: "Erro interno ao carregar os dados." }));
+        }
       });
     },
   };
